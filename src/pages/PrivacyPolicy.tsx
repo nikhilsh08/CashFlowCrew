@@ -100,7 +100,7 @@ export const PrivacyPolicy: React.FC = () => {
             <p className="text-gray-600">
               For privacy-related concerns, please contact us at:
               <br />
-              Email: nikhil@blueflowercoshop.com
+              Email: nikhil@blueflowerco.com
               <br />
               Address: 7 Bright Street, Flat 10AB, Kolkata - 700019
             </p>

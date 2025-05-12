@@ -98,7 +98,7 @@ export const Footer = () => {
               <li className="flex items-start gap-3">
                 <Mail className="w-5 h-5 text-indigo-600 mt-0.5" />
                 <a href="mailto:support@cashflowcrew.com" className="text-gray-600 hover:text-indigo-600 transition-colors">
-                nikhil@blueflowercoshop.com
+                nikhil@blueflowerco.com
                 </a>
               </li>
 
@@ -118,7 +118,7 @@ export const Footer = () => {
         <div className="border-t border-gray-200 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-600 text-sm text-center md:text-left">
-              © {currentYear} CashFlowCrew. All rights reserved. | CIN: U74999HR2023PTC123456
+              © {currentYear} CashFlowCrew. All rights reserved.
             </p>
             <div className="flex items-center gap-4">
               <Link to="/privacy-policy#cookies" className="text-gray-600 hover:text-indigo-600 transition-colors text-sm">

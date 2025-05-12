@@ -99,7 +99,7 @@ export const RefundPolicy: React.FC = () => {
             <p className="text-gray-600">
               For refund-related queries, contact us at:
               <br />
-              Email: nikhil@blueflowercoshop.com
+              Email: nikhil@blueflowerco.com
               <br />
               Response Time: Within 24 hours
             </p>
