@@ -98,16 +98,16 @@ export const Footer = () => {
               <li className="flex items-start gap-3">
                 <Mail className="w-5 h-5 text-indigo-600 mt-0.5" />
                 <a href="mailto:support@cashflowcrew.com" className="text-gray-600 hover:text-indigo-600 transition-colors">
-                  support@cashflowcrew.in
+                nikhil@blueflowercoshop.com
                 </a>
               </li>
 
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-indigo-600 mt-0.5" />
                 <address className="text-gray-600 not-italic">
-                  CashFlowCrew Private Limited<br />
-                  42, Innovation Hub, Cyber City<br />
-                  Gurugram, Haryana 122002
+                  7 Bright Street,<br />
+                  Flat 10AB,<br />
+                  Kolkata - 700019
                 </address>
               </li>
             </ul>
