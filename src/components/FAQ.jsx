@@ -66,12 +66,7 @@ export const FAQ = () => {
           ))}
         </div>
 
-        <div className="mt-12 text-center">
-          <p className="text-gray-600 mb-6">Still have questions?</p>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-200">
-            Contact Us
-          </button>
-        </div>
+        
       </div>
     </div>
   );
