@@ -13,7 +13,8 @@ import {
   Bonuses,
   MoneyBackGuarantee,
   FAQ,
-  Footer
+  Footer,
+  Disclaimer
 } from './components';
 import { PrivacyPolicy, TermsAndConditions, RefundPolicy } from './pages';
 
@@ -44,6 +45,7 @@ const HomePage = () => (
         </div>
       </div>
     </div>
+    <Disclaimer/>
     <Footer />
   </>
 );
