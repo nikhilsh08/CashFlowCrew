@@ -74,27 +74,27 @@ export const Footer = () => {
             <h3 className="text-gray-900 font-semibold mb-4">Legal</h3>
             <ul className="space-y-3">
               <li>
-                <Link to="/privacy-policy#top" className="text-gray-600 hover:text-indigo-600 transition-colors">
+                <Link to="/privacy-policy" className="text-gray-600 hover:text-indigo-600 transition-colors">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link to="/terms#top" className="text-gray-600 hover:text-indigo-600 transition-colors">
+                <Link to="/terms" className="text-gray-600 hover:text-indigo-600 transition-colors">
                   Terms & Conditions
                 </Link>
               </li>
               <li>
-                <Link to="/refund-policy#top" className="text-gray-600 hover:text-indigo-600 transition-colors">
+                <Link to="/refund-policy" className="text-gray-600 hover:text-indigo-600 transition-colors">
                   Refund Policy
                 </Link>
               </li>
               <li>
-                <Link to="/delivery-policy#top" className="text-gray-600 hover:text-indigo-600 transition-colors">
+                <Link to="/delivery-policy" className="text-gray-600 hover:text-indigo-600 transition-colors">
                   Delivery Policy
                 </Link>
               </li>
               <li>
-                <Link to="/contact-us#top" className="text-gray-600 hover:text-indigo-600 transition-colors">
+                <Link to="/contact-us" className="text-gray-600 hover:text-indigo-600 transition-colors">
                   Contact us
                 </Link>
               </li>
