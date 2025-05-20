@@ -9,6 +9,6 @@ export * from './MentorSection';
 export * from './OfferDetails';
 export * from './Bonuses';
 export * from './MoneyBackGuarantee';
-export * from './FAQ';
 export * from './Disclaimer';
+export * from './FAQ';
 export * from './Footer';

@@ -12,11 +12,11 @@ import {
   OfferDetails,
   Bonuses,
   MoneyBackGuarantee,
+  Disclaimer,
   FAQ,
-  Footer,
-  Disclaimer
+  Footer
 } from './components';
-import { PrivacyPolicy, TermsAndConditions, RefundPolicy } from './pages';
+import { PrivacyPolicy, TermsAndConditions, RefundPolicy, DeliveryPolicy, ContactUs } from './pages';
 
 const HomePage = () => (
   <>
@@ -45,7 +45,7 @@ const HomePage = () => (
         </div>
       </div>
     </div>
-    <Disclaimer/>
+    <Disclaimer />
     <Footer />
   </>
 );
@@ -59,6 +59,8 @@ const App = () => {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsAndConditions />} />
           <Route path="/refund-policy" element={<RefundPolicy />} />
+          <Route path="/delivery-policy" element={<DeliveryPolicy />} />
+          <Route path="/contact-us" element={<ContactUs />} />
         </Routes>
       </div>
     </Router>

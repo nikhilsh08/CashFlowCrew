@@ -1,6 +1,6 @@
-import React from "react";
-import { DollarSign, Mail, MapPin } from "lucide-react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { DollarSign, Mail, MapPin, Phone } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -10,12 +10,11 @@ export const Footer: React.FC = () => {
     if (element) {
       const headerOffset = 80;
       const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition =
-        elementPosition + window.pageYOffset - headerOffset;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: "smooth",
+        behavior: 'smooth'
       });
     }
   };
@@ -35,8 +34,7 @@ export const Footer: React.FC = () => {
               </span>
             </div>
             <p className="text-gray-600 mb-4">
-              Empowering individuals with professional-grade mutual fund
-              investment knowledge and strategies.
+              Empowering individuals with professional-grade mutual fund investment knowledge and strategies.
             </p>
           </div>
 
@@ -45,24 +43,24 @@ export const Footer: React.FC = () => {
             <h3 className="text-gray-900 font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-3">
               <li>
-                <button
-                  onClick={() => scrollToSection("mentor")}
+                <button 
+                  onClick={() => scrollToSection('mentor')}
                   className="text-gray-600 hover:text-indigo-600 transition-colors"
                 >
                   Meet Your Mentor
                 </button>
               </li>
               <li>
-                <button
-                  onClick={() => scrollToSection("timeline")}
+                <button 
+                  onClick={() => scrollToSection('timeline')}
                   className="text-gray-600 hover:text-indigo-600 transition-colors"
                 >
                   Course Details
                 </button>
               </li>
               <li>
-                <button
-                  onClick={() => scrollToSection("faq")}
+                <button 
+                  onClick={() => scrollToSection('faq')}
                   className="text-gray-600 hover:text-indigo-600 transition-colors"
                 >
                   FAQs
@@ -76,27 +74,28 @@ export const Footer: React.FC = () => {
             <h3 className="text-gray-900 font-semibold mb-4">Legal</h3>
             <ul className="space-y-3">
               <li>
-                <Link
-                  to="/privacy-policy"
-                  className="text-gray-600 hover:text-indigo-600 transition-colors"
-                >
+                <Link to="/privacy-policy" className="text-gray-600 hover:text-indigo-600 transition-colors">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/terms"
-                  className="text-gray-600 hover:text-indigo-600 transition-colors"
-                >
+                <Link to="/terms" className="text-gray-600 hover:text-indigo-600 transition-colors">
                   Terms & Conditions
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/refund-policy"
-                  className="text-gray-600 hover:text-indigo-600 transition-colors"
-                >
+                <Link to="/refund-policy" className="text-gray-600 hover:text-indigo-600 transition-colors">
                   Refund Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/delivery-policy" className="text-gray-600 hover:text-indigo-600 transition-colors">
+                  Delivery Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact-us" className="text-gray-600 hover:text-indigo-600 transition-colors">
+                  Contact us
                 </Link>
               </li>
             </ul>
@@ -108,10 +107,7 @@ export const Footer: React.FC = () => {
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <Mail className="w-5 h-5 text-indigo-600 mt-0.5" />
-                <a
-                  href="mailto:support@cashflowcrew.com"
-                  className="text-gray-600 hover:text-indigo-600 transition-colors"
-                >
+                <a href="mailto:support@cashflowcrew.com" className="text-gray-600 hover:text-indigo-600 transition-colors">
                   support@cashflowcrew.in
                 </a>
               </li>
@@ -119,12 +115,15 @@ export const Footer: React.FC = () => {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-indigo-600 mt-0.5" />
                 <address className="text-gray-600 not-italic">
-                  7 Bright Street,
-                  <br />
-                  Flat 10AB,
-                  <br />
-                  Kolkata - 700019
+                  CashFlowCrew Private Limited<br />
+                  42, Innovation Hub, Cyber City<br />
+                  Gurugram, Haryana 122002
                 </address>
+              </li>
+              <li>
+                <Link to="/contact-us" className="text-gray-600 hover:text-indigo-600 transition-colors">
+                  Contact Us
+                </Link>
               </li>
             </ul>
           </div>
@@ -134,21 +133,14 @@ export const Footer: React.FC = () => {
         <div className="border-t border-gray-200 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-600 text-sm text-center md:text-left">
-              © {currentYear} CashFlowCrew. All rights reserved. | CIN:
-              U74999HR2023PTC123456
+              © {currentYear} CashFlowCrew. All rights reserved. | CIN: U74999HR2023PTC123456
             </p>
             <div className="flex items-center gap-4">
-              <Link
-                to="/privacy-policy#cookies"
-                className="text-gray-600 hover:text-indigo-600 transition-colors text-sm"
-              >
+              <Link to="/privacy-policy#cookies" className="text-gray-600 hover:text-indigo-600 transition-colors text-sm">
                 Cookie Policy
               </Link>
               <span className="text-gray-300">|</span>
-              <Link
-                to="/sitemap"
-                className="text-gray-600 hover:text-indigo-600 transition-colors text-sm"
-              >
+              <Link to="/sitemap" className="text-gray-600 hover:text-indigo-600 transition-colors text-sm">
                 Sitemap
               </Link>
             </div>

@@ -88,6 +88,16 @@ export const Footer = () => {
                   Refund Policy
                 </Link>
               </li>
+              <li>
+                <Link to="/delivery-policy" className="text-gray-600 hover:text-indigo-600 transition-colors">
+                  Delivery Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact-us" className="text-gray-600 hover:text-indigo-600 transition-colors">
+                  Contact us
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -98,7 +108,7 @@ export const Footer = () => {
               <li className="flex items-start gap-3">
                 <Mail className="w-5 h-5 text-indigo-600 mt-0.5" />
                 <a href="mailto:support@cashflowcrew.com" className="text-gray-600 hover:text-indigo-600 transition-colors">
-                support@cashflowcrew.in
+                  support@cashflowcrew.in
                 </a>
               </li>
 
@@ -107,7 +117,7 @@ export const Footer = () => {
                 <address className="text-gray-600 not-italic">
                   7 Bright Street,<br />
                   Flat 10AB,<br />
-                  Kolkata - 700019
+                 Kolkata - 700019    
                 </address>
               </li>
             </ul>
