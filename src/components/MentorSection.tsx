@@ -24,7 +24,7 @@ export const MentorSection: React.FC = () => (
         <div className="flex-1 text-left">
           <h2 className="text-4xl font-bold text-gray-900 mb-2">Nikhil Sharma</h2>
           <p className="text-orange-500 text-xl font-semibold mb-6">
-            Amazon Ads SME | Founder – CashFlowCrew | Ex-Goldman Sachs
+            Founder – CashFlowCrew | Ex-Goldman Sachs
           </p>
           
           <p className="text-gray-600 text-lg mb-8 bg-white/80 p-6 rounded-xl backdrop-blur-sm">

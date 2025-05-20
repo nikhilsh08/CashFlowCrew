@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -32,7 +33,7 @@ export const FAQ = () => {
   ];
 
   return (
-    <div className="mt-24 bg-gradient-to-b from-gray-50 to-white py-16">
+    <div id="faq" className="mt-24 bg-gradient-to-b from-gray-50 to-white py-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
           Frequently Asked Questions
@@ -66,6 +67,12 @@ export const FAQ = () => {
           ))}
         </div>
 
+        <div className="mt-12 text-center">
+          <p className="text-gray-600 mb-6">Still have questions?</p>
+          <Link to="/contact-us#top" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-200">
+            Contact Us
+          </Link>
+        </div>
       </div>
     </div>
   );

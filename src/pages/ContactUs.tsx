@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Mail, MapPin, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -22,6 +22,11 @@ export const ContactUs: React.FC = () => {
       [e.target.name]: e.target.value
     });
   };
+
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
 
   return (
     <div className="min-h-screen bg-gray-50">

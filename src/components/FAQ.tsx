@@ -32,7 +32,7 @@ export const FAQ: React.FC = () => {
   ];
 
   return (
-    <div className="mt-24 bg-gradient-to-b from-gray-50 to-white py-16">
+    <div id="faq" className="mt-24 bg-gradient-to-b from-gray-50 to-white py-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
           Frequently Asked Questions
@@ -68,9 +68,9 @@ export const FAQ: React.FC = () => {
 
         <div className="mt-12 text-center">
           <p className="text-gray-600 mb-6">Still have questions?</p>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-200">
+          <Link to="/contact-us#top" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-200">
             Contact Us
-          </button>
+          </Link>
         </div>
       </div>
     </div>

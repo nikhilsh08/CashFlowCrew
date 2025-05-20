@@ -1,8 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { ArrowLeft, Clock, Mail, Calendar, Video, FileCheck, Phone, HelpCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export function DeliveryPolicy() {
+
+ useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
+  
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -170,20 +176,7 @@ export function DeliveryPolicy() {
                   </a>
                 </div>
                 
-                <div className="border border-gray-200 rounded-xl p-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="bg-indigo-100 p-2 rounded-lg text-indigo-700">
-                      <HelpCircle className="w-5 h-5" />
-                    </div>
-                    <h4 className="font-semibold text-lg">FAQ Resources</h4>
-                  </div>
-                  <p className="text-gray-600 mb-4">
-                    Check our comprehensive FAQ section for immediate answers to common questions about workshop access.
-                  </p>
-                  <Link to="/faq" className="text-indigo-600 font-medium hover:text-indigo-800 transition">
-                    Visit our FAQ page
-                  </Link>
-                </div>
+                
               </div>
             </section>
           </div>
