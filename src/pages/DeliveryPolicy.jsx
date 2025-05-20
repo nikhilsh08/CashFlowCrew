@@ -172,7 +172,7 @@ export function DeliveryPolicy() {
                     Our support team is available Monday-Friday, 9am-5pm EST to assist with any delivery or access issues.
                   </p>
                   <a href="mailto:support@cashflowcrew.com" className="text-indigo-600 font-medium hover:text-indigo-800 transition">
-                    support@cashflowcrew.com
+                    support@cashflowcrew.in
                   </a>
                 </div>
                 

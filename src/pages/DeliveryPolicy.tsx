@@ -233,7 +233,7 @@ export const DeliveryPolicy: React.FC = () => {
                     href="mailto:support@cashflowcrew.com"
                     className="text-indigo-600 font-medium hover:text-indigo-800 transition"
                   >
-                    support@cashflowcrew.com
+                    support@cashflowcrew.in
                   </a>
                 </div>
               </div>
