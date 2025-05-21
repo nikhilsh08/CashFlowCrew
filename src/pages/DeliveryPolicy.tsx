@@ -226,7 +226,7 @@ export const DeliveryPolicy: React.FC = () => {
                     <h4 className="font-semibold text-lg">Contact Support</h4>
                   </div>
                   <p className="text-gray-600 mb-4">
-                    Our support team is available Monday-Friday, 9am-5pm EST to
+                    Our support team is available Monday-Friday, 9am-5pm IST to
                     assist with any delivery or access issues.
                   </p>
                   <a

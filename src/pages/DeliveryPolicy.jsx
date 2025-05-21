@@ -169,7 +169,7 @@ export function DeliveryPolicy() {
                     <h4 className="font-semibold text-lg">Contact Support</h4>
                   </div>
                   <p className="text-gray-600 mb-4">
-                    Our support team is available Monday-Friday, 9am-5pm EST to assist with any delivery or access issues.
+                    Our support team is available Monday-Friday, 9am-5pm IST to assist with any delivery or access issues.
                   </p>
                   <a href="mailto:support@cashflowcrew.com" className="text-indigo-600 font-medium hover:text-indigo-800 transition">
                     support@cashflowcrew.in
@@ -183,12 +183,7 @@ export function DeliveryPolicy() {
         </div>
         
         {/* Footer CTA */}
-        <div className="text-center">
-          <h3 className="text-xl font-bold text-gray-900 mb-4">Ready to start your financial education journey?</h3>
-          <Link to="/workshops" className="inline-block bg-indigo-600 text-white font-medium px-6 py-3 rounded-lg hover:bg-indigo-700 transition duration-200">
-            Browse Available Workshops
-          </Link>
-        </div>
+        
       </div>
     </div>
   );
