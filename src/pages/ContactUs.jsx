@@ -52,9 +52,9 @@ export const ContactUs = () => {
                 <div>
                   <h3 className="font-semibold text-gray-900">Address</h3>
                   <p className="text-gray-600">
-                    CashFlowCrew Private Limited<br />
-                    42, Innovation Hub, Cyber City<br />
-                    Gurugram, Haryana 122002
+                  7 Bright Street,<br />
+                  Flat 10AB,<br />
+                 Kolkata - 700019
                   </p>
                 </div>
               </div>

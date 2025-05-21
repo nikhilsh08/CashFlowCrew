@@ -1,44 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Mail, MapPin, Phone } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { ArrowLeft, Mail, MapPin, Phone } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const ContactUs: React.FC = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission here
-    console.log('Form submitted:', formData);
+    console.log("Form submitted:", formData);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
-   useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  
 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-6xl mx-auto px-4 py-12">
-        <Link to="/" className="inline-flex items-center gap-2 text-gray-600 hover:text-indigo-600 mb-8">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-gray-600 hover:text-indigo-600 mb-8"
+        >
           <ArrowLeft className="w-5 h-5" />
           Back to Home
         </Link>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-8">Contact Us</h1>
+            <h1 className="text-4xl font-bold text-gray-900 mb-8">
+              Contact Us
+            </h1>
             <div className="space-y-6">
               <div className="flex items-start gap-4">
                 <Mail className="w-6 h-6 text-indigo-600 mt-1" />
@@ -52,9 +58,11 @@ export const ContactUs: React.FC = () => {
                 <div>
                   <h3 className="font-semibold text-gray-900">Address</h3>
                   <p className="text-gray-600">
-                    CashFlowCrew Private Limited<br />
-                    42, Innovation Hub, Cyber City<br />
-                    Gurugram, Haryana 122002
+                    7 Bright Street,
+                    <br />
+                    Flat 10AB,
+                    <br />
+                    Kolkata - 700019
                   </p>
                 </div>
               </div>
@@ -69,10 +77,15 @@ export const ContactUs: React.FC = () => {
           </div>
 
           <div className="bg-white rounded-xl shadow-lg p-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Send us a message</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+              Send us a message
+            </h2>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Name
                 </label>
                 <input
@@ -86,7 +99,10 @@ export const ContactUs: React.FC = () => {
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Email
                 </label>
                 <input
@@ -100,7 +116,10 @@ export const ContactUs: React.FC = () => {
                 />
               </div>
               <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="subject"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Subject
                 </label>
                 <input
@@ -114,7 +133,10 @@ export const ContactUs: React.FC = () => {
                 />
               </div>
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="message"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Message
                 </label>
                 <textarea
