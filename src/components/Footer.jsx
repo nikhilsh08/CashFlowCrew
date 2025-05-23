@@ -26,9 +26,7 @@ export const Footer = () => {
           {/* Company Info */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="bg-gradient-to-r from-indigo-600 to-blue-500 p-2 rounded-xl shadow-lg">
-                <DollarSign className="w-5 h-5 text-white" />
-              </div>
+              
               <span className="text-lg font-bold bg-gradient-to-r from-indigo-600 to-blue-500 text-transparent bg-clip-text">
                 CashFlowCrew
               </span>

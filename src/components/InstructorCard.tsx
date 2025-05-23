@@ -1,5 +1,5 @@
-import React from 'react';
-import { Award, Shield, BookOpen } from 'lucide-react';
+import React from "react";
+import { Award, Shield, BookOpen } from "lucide-react";
 
 export const InstructorCard: React.FC = () => (
   <div className="bg-white rounded-2xl shadow-lg p-8 group relative overflow-hidden">
@@ -12,21 +12,27 @@ export const InstructorCard: React.FC = () => (
       <ul className="space-y-3 text-left">
         <li className="flex items-start gap-3">
           <Award className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
-          <span className="text-gray-700">Managed Risk for $65B+ AUM at Goldman Sachs</span>
+          <span className="text-gray-700">
+            Managed Risk for ₹65B+ AUM at Goldman Sachs
+          </span>
         </li>
         <li className="flex items-start gap-3">
           <Shield className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
-          <span className="text-gray-700">2-Time Founder: LitmusEye & CashFlowCrew</span>
+          <span className="text-gray-700">
+            2-Time Founder: LitmusEye & CashFlowCrew
+          </span>
         </li>
         <li className="flex items-start gap-3">
           <BookOpen className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
-          <span className="text-gray-700">Ex National Head of Operations & Enterprise Sales at LocoNav</span>
+          <span className="text-gray-700">
+            Ex National Head of Operations & Enterprise Sales at LocoNav
+          </span>
         </li>
       </ul>
     </div>
 
     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-      <img 
+      <img
         src="https://res.cloudinary.com/dq1llsy7f/image/upload/v1738855885/c1gzyxcgfokizkisio3j.jpg"
         alt="Nikhil Sharma"
         className="w-full h-full object-cover object-[center_20%] rounded-xl"

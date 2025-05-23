@@ -28,8 +28,7 @@ export const RefundPolicy: React.FC = () => {
             <div className="space-y-4 text-gray-600">
               <p>
                 We offer a 7-day, no-questions-asked money-back guarantee on our
-                Mutual Fund Mastery Workshop. Refunds will be credited to the
-                original payment method within 5-7 business days
+                Mutual Fund Mastery Workshop.
               </p>
 
               <div className="bg-green-50 border border-green-100 rounded-lg p-4 mt-4">
@@ -72,13 +71,17 @@ export const RefundPolicy: React.FC = () => {
               <p>To request a refund:</p>
               <ol className="list-decimal pl-5 space-y-2">
                 <li>
-                  Email refunds@cashflowcrew.in with your purchase details
+                  Email support@cashflowcrew.in with your purchase details
                 </li>
                 <li>
-                  Include "Refund Request - [Your Name]" in the subject line
+                  Include refund request name should be mentioned in the subject
+                  line
                 </li>
                 <li>Provide your order number and reason for refund</li>
-                <li>Refunds are processed within 5-7 business days</li>
+                <li>
+                  Refunds will be credited to the original payment method within
+                  5-7 business days
+                </li>
               </ol>
             </div>
           </section>
