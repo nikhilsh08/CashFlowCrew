@@ -134,10 +134,8 @@ export const Footer = () => {
               <Link to="/privacy-policy#cookies" className="text-gray-600 hover:text-indigo-600 transition-colors text-sm">
                 Cookie Policy
               </Link>
-              <span className="text-gray-300">|</span>
-              <Link to="/sitemap" className="text-gray-600 hover:text-indigo-600 transition-colors text-sm">
-                Sitemap
-              </Link>
+            
+              
             </div>
           </div>
         </div>

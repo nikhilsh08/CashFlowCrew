@@ -28,7 +28,8 @@ export const RefundPolicy: React.FC = () => {
             <div className="space-y-4 text-gray-600">
               <p>
                 We offer a 7-day, no-questions-asked money-back guarantee on our
-                Mutual Fund Mastery Workshop.
+                Mutual Fund Mastery Workshop. Refunds will be credited to the
+                original payment method within 5-7 business days
               </p>
 
               <div className="bg-green-50 border border-green-100 rounded-lg p-4 mt-4">

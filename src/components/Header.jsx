@@ -48,9 +48,7 @@ export const Header = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <div className="flex items-center gap-3">
-              <div className="bg-gradient-to-r from-indigo-600 to-blue-500 p-2.5 rounded-xl shadow-lg">
-                <DollarSign className="w-6 h-6 text-white" />
-              </div>
+              
               <div className="flex flex-col">
                 <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-blue-500 text-transparent bg-clip-text">
                   CashFlowCrew
