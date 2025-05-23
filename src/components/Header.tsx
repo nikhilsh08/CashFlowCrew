@@ -74,9 +74,9 @@ export const Header: React.FC = () => {
               >
                 Course Details
               </button>
-              <button className="bg-gradient-to-r from-indigo-600 to-blue-500 text-white px-6 py-2.5 rounded-xl font-medium shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5">
+              {/* <button className="bg-gradient-to-r from-indigo-600 to-blue-500 text-white px-6 py-2.5 rounded-xl font-medium shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5">
                 Enroll Now
-              </button>
+              </button> */}
             </div>
 
             <button

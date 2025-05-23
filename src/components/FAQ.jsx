@@ -18,10 +18,7 @@ export const FAQ = () => {
       question: "How is this different from free content available online?",
       answer: "While free content is valuable, this course provides structured, comprehensive knowledge with practical insights from industry experience. You'll learn proven strategies and get exclusive tools that aren't available elsewhere."
     },
-    {
-      question: "Do I need to have a lot of money to start investing after this course?",
-      answer: "No, you can start investing with as little as ₹500 per month through SIPs. The course will teach you how to make the most of your investments, regardless of the amount."
-    },
+    
     {
       question: "Will there be any support after the course?",
       answer: "Yes, you'll get access to all the bonus materials and tools. Plus, you can always revisit the course content to refresh your knowledge."
@@ -69,7 +66,7 @@ export const FAQ = () => {
 
         <div className="mt-12 text-center">
           <p className="text-gray-600 mb-6">Still have questions?</p>
-          <Link to="/contact-us#top" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-200">
+          <Link to="/contact-us" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-200">
             Contact Us
           </Link>
         </div>

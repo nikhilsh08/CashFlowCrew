@@ -9,7 +9,7 @@ import {
   Timeline,
   Testimonials,
   MentorSection,
-  OfferDetails,
+  
   Bonuses,
   MoneyBackGuarantee,
   Disclaimer,
@@ -40,7 +40,7 @@ const HomePage = () => (
           <MentorSection />
           <Bonuses />
           <MoneyBackGuarantee />
-          <OfferDetails />
+          {/* <OfferDetails /> */}
           <FAQ />
         </div>
       </div>
