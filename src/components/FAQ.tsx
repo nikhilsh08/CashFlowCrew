@@ -1,6 +1,7 @@
+"use client";
 import React from "react";
 import { Plus, Minus } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 export const FAQ: React.FC = () => {
   const [openIndex, setOpenIndex] = React.useState<number | null>(null);
@@ -75,7 +76,7 @@ export const FAQ: React.FC = () => {
         <div className="mt-12 text-center">
           <p className="text-gray-600 mb-6">Still have questions?</p>
           <Link
-            to="/contact-us"
+            href="/contact-us"
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-200"
           >
             Contact Us

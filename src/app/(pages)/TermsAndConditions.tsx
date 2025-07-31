@@ -1,6 +1,7 @@
+"use client";
 import React, { useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 export const TermsAndConditions: React.FC = () => {
   useEffect(() => {
@@ -11,7 +12,7 @@ export const TermsAndConditions: React.FC = () => {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-4 py-12">
         <Link
-          to="/"
+          href="/"
           className="inline-flex items-center gap-2 text-gray-600 hover:text-indigo-600 mb-8"
         >
           <ArrowLeft className="w-5 h-5" />

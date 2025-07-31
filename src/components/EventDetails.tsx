@@ -1,6 +1,6 @@
 import React from 'react';
-import { EventDetail } from '../types';
-import { eventDetails } from '../data';
+import { EventDetail } from '@/types';
+import { eventDetails } from '@/data';
 
 export const EventDetails: React.FC = () => (
   <div className="bg-white rounded-2xl shadow-lg p-8">

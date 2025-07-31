@@ -1,4 +1,4 @@
-import { DivideIcon as LucideIcon } from 'lucide-react';
+import { DivideIcon, type LucideIcon } from 'lucide-react';
 
 export interface Message {
   type: 'student' | 'instructor';

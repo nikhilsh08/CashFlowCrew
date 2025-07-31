@@ -1,6 +1,7 @@
+"use client";
 import React from "react";
 import { DollarSign, Mail, MapPin, Phone } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -74,7 +75,7 @@ export const Footer: React.FC = () => {
             <ul className="space-y-3">
               <li>
                 <Link
-                  to="/privacy-policy"
+                  href="/privacy-policy"
                   className="text-gray-600 hover:text-indigo-600 transition-colors"
                 >
                   Privacy Policy
@@ -82,7 +83,7 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link
-                  to="/terms"
+                 href="/terms"
                   className="text-gray-600 hover:text-indigo-600 transition-colors"
                 >
                   Terms & Conditions
@@ -90,7 +91,7 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link
-                  to="/refund-policy"
+                 href="/refund-policy"
                   className="text-gray-600 hover:text-indigo-600 transition-colors"
                 >
                   Refund Policy
@@ -98,7 +99,7 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link
-                  to="/delivery-policy"
+                 href="/delivery-policy"
                   className="text-gray-600 hover:text-indigo-600 transition-colors"
                 >
                   Delivery Policy
@@ -106,7 +107,7 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link
-                  to="/contact-us"
+                 href="/contact-us"
                   className="text-gray-600 hover:text-indigo-600 transition-colors"
                 >
                   Contact us
@@ -152,7 +153,7 @@ export const Footer: React.FC = () => {
             </p>
             <div className="flex items-center gap-4">
               <Link
-                to="/privacy-policy#cookies"
+               href="/privacy-policy#cookies"
                 className="text-gray-600 hover:text-indigo-600 transition-colors text-sm"
               >
                 Cookie Policy

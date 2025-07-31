@@ -7,7 +7,7 @@ import {
   PenTool as Tool,
   Bot,
 } from "lucide-react";
-import { bonuses } from "../data";
+import { bonuses } from "@/data";
 
 export const Bonuses: React.FC = () => (
   <div className="mt-24 py-16 bg-gradient-to-b from-gray-50 to-white">

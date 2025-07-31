@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect } from "react";
 import {
   ArrowLeft,
@@ -9,7 +10,7 @@ import {
   Phone,
   HelpCircle,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 export const DeliveryPolicy: React.FC = () => {
   useEffect(() => {
@@ -21,7 +22,7 @@ export const DeliveryPolicy: React.FC = () => {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header with navigation */}
         <Link
-          to="/"
+          href="/"
           className="inline-flex items-center gap-2 text-gray-600 hover:text-indigo-600 mb-8 transition duration-200"
         >
           <ArrowLeft className="w-5 h-5" />
