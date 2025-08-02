@@ -3,7 +3,7 @@ import { Award, Shield, BookOpen } from "lucide-react";
 
 export const InstructorCard: React.FC = () => (
   <div className="bg-white rounded-2xl shadow-lg p-8 group relative overflow-hidden">
-    <div className="text-center transition-opacity duration-300 group-hover:opacity-0">
+    {/* <div className="text-center transition-opacity duration-300 group-hover:opacity-0">
       <p className="text-sm text-gray-600 mb-2">Instructed by</p>
       <h3 className="text-2xl font-bold text-gray-900 mb-2">Nikhil Sharma</h3>
       <p className="text-lg text-blue-600 font-medium mb-4">
@@ -29,9 +29,9 @@ export const InstructorCard: React.FC = () => (
           </span>
         </li>
       </ul>
-    </div>
+    </div> */}
 
-    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+    <div className="absolute inset-0  transition-opacity duration-300">
       <img
         src="https://res.cloudinary.com/dq1llsy7f/image/upload/v1738855885/c1gzyxcgfokizkisio3j.jpg"
         alt="Nikhil Sharma"

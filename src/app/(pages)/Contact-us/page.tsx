@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { ArrowLeft, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 
-export const ContactUs: React.FC = () => {
+ const ContactUs: React.FC = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -163,3 +163,4 @@ export const ContactUs: React.FC = () => {
     </div>
   );
 };
+export default ContactUs;
