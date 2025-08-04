@@ -13,26 +13,26 @@ export interface Testimonial {
 }
 
 export interface EventDetail {
-  icon: LucideIcon;
+  icon: typeof LucideIcon;
   text: string;
 }
 
 export interface Experience {
-  icon: LucideIcon;
+  icon: typeof LucideIcon;
   title: string;
   description: string;
 }
 
 export interface TimelineItem {
-  icon: LucideIcon;
+  icon: typeof LucideIcon;
   title: string;
   description: string;
   timeSlot: string;
 }
 
 export interface Bonus {
-  icon: LucideIcon;
+  icon: typeof LucideIcon;
   title: string;
   description: string;
-  worth: string;
+  worth: Number;
 }
