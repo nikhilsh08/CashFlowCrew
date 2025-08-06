@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { DollarSign, X } from "lucide-react";
+import HeaderLogo from "../assets/HeaderLogo";
+
+
 
 export const Header: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState(15 * 60); // 15 minutes in seconds
@@ -51,10 +54,17 @@ export const Header: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <div className="flex items-center gap-3">
+              <HeaderLogo />
+
               <div className="flex flex-col">
-                <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-blue-500 text-transparent bg-clip-text">
-                  CashFlowCrew
-                </span>
+                {/* Logo row */}
+                <div className="flex items-center gap-2">
+                  <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-blue-500 text-transparent bg-clip-text">
+                    CashFlowCrew
+                  </span>
+                </div>
+
+                {/* Tagline */}
                 <span className="text-xs text-gray-500 hidden sm:block">
                   Master Your Finances
                 </span>
