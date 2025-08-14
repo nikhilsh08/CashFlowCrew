@@ -22,6 +22,8 @@ import {
   DeliveryPolicy,
   ContactUs,
 } from "./pages";
+import MasterClass from "./pages/MasterClass";
+import Status from "./pages/status";
 
 const HomePage: React.FC = () => (
   <>
@@ -66,6 +68,8 @@ const App: React.FC = () => {
           <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="/delivery-policy" element={<DeliveryPolicy />} />
           <Route path="/contact-us" element={<ContactUs />} />
+          <Route path="/payment/status/:id" element={<Status />} />
+          <Route path="/master-class/register" element={<MasterClass />} />
         </Routes>
       </div>
     </Router>
