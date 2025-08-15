@@ -23,7 +23,7 @@ import {
   ContactUs,
 } from "./pages";
 import MasterClass from "./pages/MasterClass";
-import Status from "./pages/status";
+import Status from "./pages/Status";
 
 const HomePage: React.FC = () => (
   <>
