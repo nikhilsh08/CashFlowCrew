@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import type { PhonePePaymentStatusResponse } from "../types";
 import { CheckCircle, Clock, XCircle } from "lucide-react";
 import { masterclass } from "../data";
+import { toast } from "react-toastify";
 
 const Status = () => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const Status = () => {
       }
       console.log("Payment Status Response:", response.data);
     } catch (error) {
-      console.error("Error checking payment status:", error);
+      toast.error("Error checking payment status");
     }
   };
 

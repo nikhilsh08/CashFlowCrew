@@ -4,6 +4,8 @@ import { CheckCircle, User, Calendar, Clock, Users, Star } from "lucide-react";
 import NavBar from "../components/NavBar";
 import axios from "axios";
 import { masterclass } from "../data";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface FormData {
   firstName: string;
@@ -37,7 +39,6 @@ const MasterClass = () => {
       coupon: "",
       gstNumber: "",
       companyName: "",
-      amount: 0,
     },
   });
 
@@ -79,7 +80,8 @@ const MasterClass = () => {
   }, [couponApplied]);
 
   const onSubmit = async (data: FormData) => {
-    // data.amount = 1;
+    console.log("Form Data:", data);
+    data.amount = finalPrice;
     setPaymentStatus(null);
     setIsProcessingPayment(true);
 
@@ -92,12 +94,11 @@ const MasterClass = () => {
       if (response.data.success && response.data.checkoutUrl) {
         setPaymentToken(response.data.checkoutUrl);
       } else {
-        throw new Error("Invalid response from payment service");
+        toast.error("Payment initiation failed. Please try again.");
       }
     } catch (error) {
-      console.error("Error initiating payment:", error);
-      setPaymentStatus("PAYMENT_ERROR");
       setIsProcessingPayment(false);
+      toast.error("Error initiating payment");
     }
   };
 

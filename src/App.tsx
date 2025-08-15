@@ -25,9 +25,11 @@ import {
 } from "./pages";
 import MasterClass from "./pages/MasterClass";
 import Status from "./pages/Status";
+import { ToastContainer } from "react-toastify";
 
 const HomePage: React.FC = () => (
   <>
+  
     <div className="flex-1 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
         <div className="text-center">
@@ -62,6 +64,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <div className="min-h-screen flex flex-col">
+        <ToastContainer position="top-right" autoClose={3000} />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
