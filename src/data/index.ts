@@ -206,7 +206,7 @@ export const masterclass = {
   start_time: "16:00",
   end_time: "19:00",
   duration: "1 Day",
-  price: 299,
+  price: 249,
   location: "Online - Live Session",
   meeting_link: "https://live.zoho.in/htfh-bxb-jlt",
   currency: "INR"
