@@ -28,20 +28,38 @@ export const today = new Date().toLocaleDateString('en-US', {
   year: 'numeric'
 });
 
-const nextSaturday = new Date();
+export const formatdate = () =>{
+   const nextSaturday = new Date();
   nextSaturday.setDate(nextSaturday.getDate() + ((6 - nextSaturday.getDay()
-  + 7) % 7));
-   // Find next Saturday
+  + 7) % 7)); // Find next Saturday
   const formattedDate = nextSaturday.toLocaleDateString('en-US', {
     day: 'numeric',
     month: 'long',
     year: 'numeric'
   });
+  return formattedDate;
+}
+export const masterclass = {
+  email: "support@cashflowcrew.com",
+  title: "Master Mutual Funds: Invest Smarter",
+  description:
+    "EXPOSED: The Risk Analysis Secrets Wall Street Uses to Pick Mutual Funds (That Your Financial Advisor Never Told You About). This intensive 1-day live session will guide you through practical strategies for identifying high-performing mutual funds, managing risk effectively, and building a diversified portfolio for long-term financial growth. You will also gain insider knowledge on how professional fund managers evaluate and rebalance investments. Perfect for beginners and experienced investors looking to sharpen their skills.",
+  instructor: "Nikhil Sharma",
+  date: formatdate(),
+  start_time: "12:00",
+  end_time: "3:00",
+  duration: "1 Day",
+  price: 249,
+  location: "Online - Live Session",
+  meeting_link: "https://live.zoho.in/htfh-bxb-jlt",
+  currency: "INR"
+};
+
 export const eventDetails: EventDetail[] = [
   { icon: Clock, text: "1 Day" },
   { icon: Video, text: "Live Session" },
-  { icon: Calendar, text: formattedDate },
-  { icon: Clock, text: "4 PM – 7 PM IST" },
+  { icon: Calendar, text: formatdate() },
+  { icon: Clock, text: `${masterclass.start_time} PM - ${masterclass.end_time} PM IST` },
 ];
 
 export const testimonials: Testimonial[] = [
@@ -196,18 +214,9 @@ export const bonuses: Bonus[] = [
   }
 ];
 
-export const masterclass = {
-  email: "support@cashflowcrew.com",
-  title: "Master Mutual Funds: Invest Smarter",
-  description:
-    "EXPOSED: The Risk Analysis Secrets Wall Street Uses to Pick Mutual Funds (That Your Financial Advisor Never Told You About). This intensive 1-day live session will guide you through practical strategies for identifying high-performing mutual funds, managing risk effectively, and building a diversified portfolio for long-term financial growth. You will also gain insider knowledge on how professional fund managers evaluate and rebalance investments. Perfect for beginners and experienced investors looking to sharpen their skills.",
-  instructor: "Nikhil Sharma",
-  date: "2025-08-16",
-  start_time: "16:00",
-  end_time: "19:00",
-  duration: "1 Day",
-  price: 249,
-  location: "Online - Live Session",
-  meeting_link: "https://live.zoho.in/htfh-bxb-jlt",
-  currency: "INR"
-};
+
+
+
+
+
+

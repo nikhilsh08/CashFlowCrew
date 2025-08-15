@@ -48,7 +48,7 @@ const NavBar = () => {
             <div className="flex flex-col">
               {/* Logo row */}
               <div className="flex items-center gap-2">
-                <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-blue-500 text-transparent bg-clip-text">
+                <span className="text-xl font-bold max-md:hi bg-gradient-to-r from-indigo-600 to-blue-500 text-transparent bg-clip-text">
                   CashFlowCrew
                 </span>
               </div>
