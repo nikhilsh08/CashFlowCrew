@@ -69,7 +69,7 @@ const Status = () => {
         </div>
       );
     }
-    paymentStatus.status="COMPLETED"; // For testing purposes, you can remove this line in production
+    // paymentStatus.status="COMPLETED"; // For testing purposes, you can remove this line in production
     switch (paymentStatus.status) {
       case "COMPLETED":
         return (
