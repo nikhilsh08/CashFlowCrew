@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import TagManager from "react-gtm-module";
-import ReactPixel from "react-facebook-pixel";
+// import ReactPixel from "react-facebook-pixel";
 import {
   Header,
   EventDetails,
@@ -70,7 +70,7 @@ const usePageTracking = () => {
     });
 
     // Facebook Pixel Page View
-    ReactPixel.pageView();
+    // ReactPixel.pageView();
   }, [location]);
 };
 
@@ -100,8 +100,8 @@ const App: React.FC = () => {
     TagManager.initialize({ gtmId: "GTM-XXXXXXX" }); // replace with your GTM ID
 
     // ✅ Initialize Facebook Pixel
-    ReactPixel.init("123456789012345"); // replace with your Pixel ID
-    ReactPixel.pageView();
+    // ReactPixel.init("123456789012345"); // replace with your Pixel ID
+    // ReactPixel.pageView();
   }, []);
 
   return (
