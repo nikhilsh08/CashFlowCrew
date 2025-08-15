@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
+import { masterclass } from "../data";
 export const CTA: React.FC = () => {
   const navigate = useNavigate();
 
@@ -10,11 +11,11 @@ export const CTA: React.FC = () => {
           onClick={() => navigate("/master-class/register")}
           className="w-full bg-gradient-to-r from-orange-500 to-yellow-500 text-white text-xl font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition duration-200"
         >
-          Enroll Now for ₹499
+          Enroll Now for ₹{masterclass.price}
         </button>
-        <p className="mt-4 text-gray-600">
+        <p className="mt-4 hidden text-gray-600">
           Use code{" "}
-          <span className="font-mono font-bold text-orange-600">
+          <span className="font-mono font-bold  text-orange-600">
             MUTUALFUNDS100
           </span>{" "}
           on checkout

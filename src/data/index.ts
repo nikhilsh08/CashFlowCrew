@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import { Testimonial, EventDetail, Experience, TimelineItem, Bonus } from '../types';
 
-const today = new Date().toLocaleDateString('en-US', {
+export const today = new Date().toLocaleDateString('en-US', {
   day: 'numeric',
   month: 'long',
   year: 'numeric'
@@ -30,7 +30,8 @@ const today = new Date().toLocaleDateString('en-US', {
 
 const nextSaturday = new Date();
   nextSaturday.setDate(nextSaturday.getDate() + ((6 - nextSaturday.getDay()
-  + 7) % 7)); // Find next Saturday
+  + 7) % 7));
+   // Find next Saturday
   const formattedDate = nextSaturday.toLocaleDateString('en-US', {
     day: 'numeric',
     month: 'long',
@@ -194,3 +195,19 @@ export const bonuses: Bonus[] = [
     worth: 1500
   }
 ];
+
+export const masterclass = {
+  email: "support@cashflowcrew.com",
+  title: "Master Mutual Funds: Invest Smarter",
+  description:
+    "EXPOSED: The Risk Analysis Secrets Wall Street Uses to Pick Mutual Funds (That Your Financial Advisor Never Told You About). This intensive 1-day live session will guide you through practical strategies for identifying high-performing mutual funds, managing risk effectively, and building a diversified portfolio for long-term financial growth. You will also gain insider knowledge on how professional fund managers evaluate and rebalance investments. Perfect for beginners and experienced investors looking to sharpen their skills.",
+  instructor: "Nikhil Sharma",
+  date: "2025-08-16",
+  start_time: "16:00",
+  end_time: "19:00",
+  duration: "1 Day",
+  price: 299,
+  location: "Online - Live Session",
+  meeting_link: "https://live.zoho.in/htfh-bxb-jlt",
+  currency: "INR"
+};

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { CheckCircle, User, Calendar, Clock, Users, Star } from "lucide-react";
 import NavBar from "../components/NavBar";
 import axios from "axios";
+import { masterclass } from "../data";
 
 interface FormData {
   firstName: string;
@@ -70,7 +71,7 @@ const MasterClass = () => {
 
   // Price calculation
   const { basePrice, gst, discount, finalPrice } = useMemo(() => {
-    const basePrice = 299;
+    const basePrice = masterclass.price;
     const gst = Math.round(basePrice * 0.18);
     const discount = couponApplied ? Math.round(basePrice * 0.2) : 0;
     const finalPrice = basePrice + gst - discount;

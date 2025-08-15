@@ -4,12 +4,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { PhonePePaymentStatusResponse } from "../types";
 import { CheckCircle, Clock, XCircle } from "lucide-react";
-
+import { masterclass } from "../data";
 
 const Status = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const { id } = useParams();
-  const [paymentStatus, setPaymentStatus] = useState<PhonePePaymentStatusResponse | null>(null);
+  const [paymentStatus, setPaymentStatus] =
+    useState<PhonePePaymentStatusResponse | null>(null);
 
   const checkPaymentStatus = async () => {
     try {
@@ -29,11 +30,35 @@ const Status = () => {
       console.error("Error checking payment status:", error);
     }
   };
-  
+
   console.log("Payment Status ID:", id, paymentStatus);
   useEffect(() => {
     checkPaymentStatus();
   }, [id]);
+
+  const formatCalendarDate = (date: string, time: string) => {
+    // Convert local date & time to UTC format for Google Calendar
+    const [hours, minutes] = time.split(":").map(Number);
+    const d = new Date(date);
+    d.setHours(hours, minutes, 0);
+    return d.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+  };
+
+  const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
+    masterclass.title
+  )}&dates=${formatCalendarDate(
+    masterclass.date,
+    masterclass.start_time
+  )}/${formatCalendarDate(
+    masterclass.date,
+    masterclass.end_time
+  )}&details=${encodeURIComponent(
+    masterclass.description +
+      "\n\n💻 Meeting Link: " +
+      masterclass.meeting_link +
+      "\n📩 Support: " +
+      masterclass.email
+  )}&location=${encodeURIComponent(masterclass.location)}`;
 
   const renderContent = () => {
     if (!paymentStatus) {
@@ -43,7 +68,7 @@ const Status = () => {
         </div>
       );
     }
-    // paymentStatus.status="PENDING"
+    paymentStatus.status="COMPLETED"; // For testing purposes, you can remove this line in production
     switch (paymentStatus.status) {
       case "COMPLETED":
         return (
@@ -53,12 +78,13 @@ const Status = () => {
               Thank You for Enrolling!
             </h1>
             <p className="text-lg text-gray-800 mb-6 text-center drop-shadow-sm">
-              Your enrollment was successful. We are excited to have you on board!
+              Your enrollment was successful. We are excited to have you on
+              board!
             </p>
             <div className="flex justify-center mt-6 items-center gap-x-4">
               <a
                 className="px-6 py-2 bg-gradient-to-r from-indigo-600 to-blue-500 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all"
-                href={`https://calendar.google.com/calendar/render?action=TEMPLATE&text=Investment%20%26%20Diversification%20Bootcamp%20with%20Nikhil%20Sharma&dates=20250815T113000Z/20250815T133000Z&details=Join%20Nikhil%20Sharma%20for%20an%20exclusive%20bootcamp%20designed%20to%20help%20you%20master%20the%20art%20of%20investing%20and%20diversifying%20your%20portfolio.%0A%0AIn%20this%20session%2C%20you%20will%20learn%3A%0A%E2%80%A2%20Smart%20investment%20strategies%0A%E2%80%A2%20Risk%20management%20techniques%0A%E2%80%A2%20How%20to%20diversify%20for%20long-term%20financial%20growth%0A%E2%80%A2%20Practical%20tips%20for%20beginners%20and%20experienced%20investors%0A%0AWhether%20you%20are%20just%20starting%20your%20investment%20journey%20or%20looking%20to%20refine%20your%20strategies%2C%20this%20bootcamp%20will%20equip%20you%20with%20actionable%20insights%20to%20make%20smarter%20financial%20decisions.%0A%0A%F0%9F%93%85%20Date%3A%20Aug%2015%2C%202025%0A%F0%9F%95%92%20Time%3A%205%3A00%20PM%20-%207%3A%00%20PM%20IST%0A%F0%9F%93%8D%20Location%3A%20Online%20%28${"https:meet.google.com"}%20Meet%20link%29%0A%0ADon%E2%80%99t%20miss%20this%20chance%20to%20take%20control%20of%20your%20financial%20future%21&location=Online%20%28Google%20Meet%20link%29`}
+                href={googleCalendarUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -76,13 +102,16 @@ const Status = () => {
               Payment is Processing
             </h1>
             <p className="text-lg text-gray-800 mb-6 text-center drop-shadow-sm">
-              We are waiting for confirmation from your payment provider.  
-              Please refresh this page in a few minutes.
+              We are waiting for confirmation from your payment provider. Please
+              refresh this page in a few minutes.
             </p>
             <div className="flex justify-center mt-6 items-center gap-x-4">
-              <button onClick={() => navigate("/")} className="px-6 py-2 bg-gradient-to-r from-indigo-600 to-blue-500 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all">
-              Go to Home Page
-            </button>
+              <button
+                onClick={() => navigate("/")}
+                className="px-6 py-2 bg-gradient-to-r from-indigo-600 to-blue-500 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all"
+              >
+                Go to Home Page
+              </button>
             </div>
           </>
         );
@@ -95,13 +124,16 @@ const Status = () => {
               Payment Failed
             </h1>
             <p className="text-lg text-gray-800 mb-6 text-center drop-shadow-sm">
-              Unfortunately, your payment did not go through.  
-              Please try again or contact support if the amount was deducted.
+              Unfortunately, your payment did not go through. Please try again
+              or contact support if the amount was deducted.
             </p>
             <div className="flex justify-center mt-6 items-center gap-x-4">
-              <button onClick={() => navigate("/master-class/register")} className="px-6 py-2 bg-gradient-to-r from-indigo-600 to-blue-500 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all">
-              Go to Payment Page
-            </button>
+              <button
+                onClick={() => navigate("/master-class/register")}
+                className="px-6 py-2 bg-gradient-to-r from-indigo-600 to-blue-500 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all"
+              >
+                Go to Payment Page
+              </button>
             </div>
           </>
         );

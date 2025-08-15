@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { DollarSign, X } from "lucide-react";
+import { X } from "lucide-react";
 import HeaderLogo from "../assets/HeaderLogo";
 import { useNavigate } from 'react-router-dom';
 
 const NavBar = () => {
+  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const navigate = useNavigate();
   useEffect(() => {
     
 
@@ -42,7 +42,7 @@ const NavBar = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <div className="flex items-center gap-3">
+          <div onClick={() => navigate("/")} className="flex cursor-pointer items-center gap-3">
             <HeaderLogo />
 
             <div className="flex flex-col">

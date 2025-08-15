@@ -14,6 +14,7 @@ import {
   Disclaimer,
   FAQ,
   Footer,
+  // OfferDetails,
 } from "./components";
 import {
   PrivacyPolicy,

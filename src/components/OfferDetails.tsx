@@ -1,6 +1,7 @@
 import React from "react";
 import { Check } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { masterclass } from "../data";
 
 export const OfferDetails: React.FC = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ export const OfferDetails: React.FC = () => {
 
               <div className="flex items-center justify-center gap-4 mb-8">
                 <span className="text-5xl md:text-6xl font-bold text-gray-900">
-                  ₹299
+                  ₹{masterclass?.price}
                 </span>
                 <span className="text-2xl text-gray-400 line-through">
                   ₹999
@@ -45,7 +46,7 @@ export const OfferDetails: React.FC = () => {
                 <div className="flex items-start gap-3">
                   <Check className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
                   <p className="text-left text-gray-600">
-                    Enjoy the discounted price of ₹299 and save a total of 50%.
+                    Enjoy the discounted price of ₹{masterclass?.price} and save a total of 50%.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
