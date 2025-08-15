@@ -13,26 +13,78 @@ export interface Testimonial {
 }
 
 export interface EventDetail {
-  icon: LucideIcon;
+  icon: typeof LucideIcon;
   text: string;
 }
 
 export interface Experience {
-  icon: LucideIcon;
+  icon: typeof LucideIcon;
   title: string;
   description: string;
 }
 
 export interface TimelineItem {
-  icon: LucideIcon;
+  icon: typeof LucideIcon;
   title: string;
   description: string;
   timeSlot: string;
 }
 
 export interface Bonus {
-  icon: LucideIcon;
+  icon: typeof LucideIcon;
   title: string;
   description: string;
-  worth: string;
+  worth: Number;
+}
+
+export interface PhonePePaymentStatusResponse {
+  success: boolean;
+  status: string; // e.g. "FAILED", "SUCCESS", "PENDING"
+  data: PaymentStatusData;
+  merchantOrderId: string;
+}
+
+export interface PaymentStatusData {
+  orderId: string;
+  state: string; // e.g. "FAILED", "COMPLETED"
+  amount: number; // in paise
+  expireAt: number; // timestamp (ms)
+  errorCode?: string;
+  detailedErrorCode?: string;
+  paymentDetails: PaymentDetail[];
+}
+
+export interface PaymentDetail {
+  paymentMode: string; // e.g. "CARD", "UPI"
+  transactionId: string;
+  timestamp: number; // timestamp (ms)
+  amount: number;
+  state: string; // e.g. "FAILED", "COMPLETED"
+  errorCode?: string;
+  detailedErrorCode?: string;
+  splitInstruments: SplitInstrument[];
+}
+
+export interface SplitInstrument {
+  amount: number;
+  rail: RailInfo;
+  instrument: InstrumentInfo;
+}
+
+export interface RailInfo {
+  type: string; // e.g. "PG"
+  transactionId: string;
+  authorizationCode?: string;
+  serviceTransactionId?: string;
+}
+
+export interface InstrumentInfo {
+  type: string; // e.g. "CREDIT_CARD"
+  bankTransactionId?: string;
+  bankId?: string;
+  arn?: string;
+  brn?: string;
+  geoScope?: string; // e.g. "DOMESTIC"
+  cardNetwork?: string; // e.g. "VISA"
+  maskedCardNumber?: string;
 }

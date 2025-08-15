@@ -12,8 +12,16 @@ export const ContactUs: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
+
+    const { name, email, subject, message } = formData;
+
+    const mailtoLink = `mailto:support@cashflowcrew.in?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\n\n${message}`
+    )}`;
+
+    window.location.href = mailtoLink;
   };
 
   const handleChange = (

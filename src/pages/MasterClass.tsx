@@ -1,0 +1,551 @@
+import { useEffect, useState, useMemo } from "react";
+import { useForm } from "react-hook-form";
+import { CheckCircle, User, Calendar, Clock, Users, Star } from "lucide-react";
+import NavBar from "../components/NavBar";
+import axios from "axios";
+
+interface FormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  coupon?: string;
+  gstNumber?: string;
+  companyName?: string;
+  amount: number;
+}
+
+const MasterClass = () => {
+  const [showGSTFields, setShowGSTFields] = useState(false);
+  const [couponApplied, setCouponApplied] = useState(false);
+  const [paymentToken, setPaymentToken] = useState<string | null>(null);
+  const [paymentStatus, setPaymentStatus] = useState<string | null>(null);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm<FormData>({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      coupon: "",
+      gstNumber: "",
+      companyName: "",
+      amount: 0,
+    },
+  });
+
+  const allowedEmailDomains = [
+    "gmail.com",
+    "icloud.com",
+    "me.com",
+    "mac.com",
+    "outlook.com",
+    "hotmail.com",
+    "live.com",
+    "msn.com",
+    "zoho.com",
+    "zohomail.com",
+  ];
+
+  const validateEmail = (email: string) => {
+    const domain = email.split("@")[1];
+    return (
+      allowedEmailDomains.includes(domain?.toLowerCase()) ||
+      "Please use Gmail, Apple Mail, Microsoft, or Zoho email only"
+    );
+  };
+
+  const validatePhone = (phone: string) => {
+    const phoneRegex = /^[6-9]\d{9}$/;
+    return (
+      phoneRegex.test(phone) || "Enter a valid 10-digit Indian mobile number"
+    );
+  };
+
+  // Price calculation
+  const { basePrice, gst, discount, finalPrice } = useMemo(() => {
+    const basePrice = 499;
+    const gst = Math.round(basePrice * 0.18);
+    const discount = couponApplied ? Math.round(basePrice * 0.2) : 0;
+    const finalPrice = basePrice + gst - discount;
+    return { basePrice, gst, discount, finalPrice };
+  }, [couponApplied]);
+
+  const onSubmit = async (data: FormData) => {
+    data.amount = 1;
+    setPaymentStatus(null);
+    setIsProcessingPayment(true);
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/payments/initiate`,
+        data
+      );
+
+      if (response.data.success && response.data.checkoutUrl) {
+        setPaymentToken(response.data.checkoutUrl);
+      } else {
+        throw new Error("Invalid response from payment service");
+      }
+    } catch (error) {
+      console.error("Error initiating payment:", error);
+      setPaymentStatus("PAYMENT_ERROR");
+      setIsProcessingPayment(false);
+    }
+  };
+
+  const applyCoupon = () => {
+    const couponCode = watch("coupon")?.toLowerCase();
+    if (couponCode === "save20") {
+      setCouponApplied(true);
+      alert("Coupon applied! 20% discount added.");
+    } else {
+      setCouponApplied(false);
+      alert("Invalid coupon code");
+    }
+  };
+
+  // Open payment page only when token changes
+  useEffect(() => {
+    if (paymentToken) {
+      window.open(paymentToken,"_self","noopener,noreferrer");
+      setIsProcessingPayment(false);
+    }
+  }, [paymentToken]);
+
+  // Listen for payment success/failure via return URL
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get("paymentStatus");
+    if (status) {
+      setPaymentStatus(status);
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
+  // // useEffect(() => {
+  //   if (paymentToken) {
+  //     return (
+  //       <iframe src={paymentToken} className="w-[33rem] min-h-screen"></iframe>
+  //     );
+  //   }
+  // }, [paymentToken]);
+
+  // Success screen
+  if (paymentStatus === "PAYMENT_SUCCESS") {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="p-10 bg-white rounded-xl shadow-2xl max-w-md text-center">
+          <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
+          <h2 className="text-2xl font-bold">Payment Successful!</h2>
+          <p className="text-gray-600 mb-4">
+            Thank you for your purchase. Check your email for confirmation.
+          </p>
+          <button
+            onClick={() => (window.location.href = "/")}
+            className="px-6 py-2 bg-blue-600 text-white rounded-lg"
+          >
+            Go Back
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Cancelled screen
+  if (paymentStatus === "PAYMENT_CANCELLED") {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="p-10 bg-white rounded-xl shadow-2xl max-w-md text-center">
+          <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            ⚠️
+          </div>
+          <h2 className="text-2xl font-bold">Payment Cancelled</h2>
+          <p className="text-gray-600 mb-4">
+            You cancelled the payment. Please try again.
+          </p>
+          <button
+            onClick={() => setPaymentStatus(null)}
+            className="px-6 py-2 bg-blue-600 text-white rounded-lg"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <NavBar />
+
+      {/* Error Messages */}
+      {paymentStatus === "PAYMENT_ERROR" && (
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+          <div
+            className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative"
+            role="alert"
+          >
+            <strong className="font-bold">Error!</strong>
+            <span className="block sm:inline">
+              {" "}
+              Something went wrong with the payment. Please try again.
+            </span>
+            <button
+              onClick={() => setPaymentStatus(null)}
+              className="absolute top-0 bottom-0 right-0 px-4 py-3"
+            >
+              <span className="sr-only">Dismiss</span>✕
+            </button>
+          </div>
+        </div>
+      )}
+
+      {paymentStatus === "SDK_ERROR" && (
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+          <div
+            className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative"
+            role="alert"
+          >
+            <strong className="font-bold">SDK Error!</strong>
+            <span className="block sm:inline">
+              {" "}
+              Failed to load payment gateway. Please refresh the page.
+            </span>
+          </div>
+        </div>
+      )}
+
+      <div className="max-w-6xl mx-auto px-4 mt-12 sm:px-6 lg:px-8 py-8">
+        <div className="pb-24 lg:pb-8">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+            {/* Form Section */}
+            <div className="lg:col-span-3">
+              <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                {/* Header */}
+                <div className="bg-gradient-to-r from-indigo-600 to-blue-500 px-8 py-6">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                      <User className="w-6 h-6 text-white" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-white">
+                      Payment Details
+                    </h2>
+                  </div>
+                </div>
+
+                <div className="p-8">
+                  {/* Personal Details */}
+                  <div className="mb-8">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-6">
+                      Personal Details
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                      <div>
+                        <input
+                          {...register("firstName", {
+                            required: "First name is required",
+                          })}
+                          type="text"
+                          placeholder="Enter First Name"
+                          className="w-full px-5 py-4 bg-gray-50 text-gray-900 placeholder-gray-500 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                        />
+                        {errors.firstName && (
+                          <p className="text-red-500 text-sm mt-2">
+                            {errors.firstName.message}
+                          </p>
+                        )}
+                      </div>
+                      <div>
+                        <input
+                          {...register("lastName", {
+                            required: "Last name is required",
+                          })}
+                          type="text"
+                          placeholder="Enter Last Name"
+                          className="w-full px-5 py-4 bg-gray-50 text-gray-900 placeholder-gray-500 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                        />
+                        {errors.lastName && (
+                          <p className="text-red-500 text-sm mt-2">
+                            {errors.lastName.message}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="mb-6">
+                      <input
+                        {...register("email", {
+                          required: "Email is required",
+                          validate: validateEmail,
+                        })}
+                        type="email"
+                        placeholder="Enter Email"
+                        className="w-full px-5 py-4 bg-gray-50 text-gray-900 placeholder-gray-500 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                      />
+                      {errors.email && (
+                        <p className="text-red-500 text-sm mt-2">
+                          {errors.email.message}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="mb-6">
+                      <div className="flex border border-gray-300 rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-blue-500 transition-all duration-200">
+                        <div className="flex items-center px-4 py-4 max-md:px-5 bg-gray-50 border-r border-gray-300">
+                          <img
+                            src="https://flagcdn.com/w20/in.png"
+                            alt="India"
+                            className="w-5 h-3 mr-2 max-sm:mr-1"
+                          />
+                          <span className="text-gray-900 font-medium max-md:font-normal max-md:text-sm">
+                            +91
+                          </span>
+                        </div>
+                        <input
+                          {...register("phone", {
+                            required: "Phone number is required",
+                            validate: validatePhone,
+                          })}
+                          type="tel"
+                          placeholder="Enter Phone Number"
+                          maxLength={10}
+                          className="flex-1 px-5 py-4 bg-gray-50 text-gray-900 placeholder-gray-500 outline-none"
+                        />
+                      </div>
+                      {errors.phone && (
+                        <p className="text-red-500 text-sm mt-2 ml-2">
+                          {errors.phone.message}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="flex items-center space-x-3">
+                      <input
+                        type="checkbox"
+                        id="gst"
+                        checked={showGSTFields}
+                        onChange={(e) => setShowGSTFields(e.target.checked)}
+                        className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                      />
+                      <label
+                        htmlFor="gst"
+                        className="text-gray-700 font-medium"
+                      >
+                        Add GST Details (Optional)
+                      </label>
+                    </div>
+
+                    {showGSTFields && (
+                      <div className="mt-6 space-y-4 p-6 bg-gray-50 rounded-xl border border-gray-200">
+                        <input
+                          {...register("gstNumber")}
+                          type="text"
+                          placeholder="GST Number"
+                          className="w-full px-5 py-4 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                        />
+                        <input
+                          {...register("companyName")}
+                          type="text"
+                          placeholder="Company Name"
+                          className="w-full px-5 py-4 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Offers & Benefits */}
+                  <div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-6">
+                      Offers & Benefits
+                    </h3>
+                    <div className="relative">
+                      <input
+                        {...register("coupon")}
+                        type="text"
+                        placeholder="Coupon Code"
+                        className="w-full px-5 py-4 pr-24 bg-gray-50 text-gray-900 placeholder-gray-500 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                      />
+                      <button
+                        type="button"
+                        onClick={applyCoupon}
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg font-semibold text-sm transition-all duration-200"
+                      >
+                        Apply
+                      </button>
+                    </div>
+                    {couponApplied && (
+                      <p className="text-green-600 text-sm mt-3 flex items-center">
+                        <CheckCircle className="w-4 h-4 mr-2" />
+                        Coupon applied successfully!
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Sidebar - Course Details & Pricing */}
+            <div className="lg:col-span-2 space-y-6">
+              {/* Course Card */}
+              <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                {/* Course Header Image */}
+                <div className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 p-6 text-white">
+                  <div className="absolute top-4 right-4">
+                    <div className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold flex items-center">
+                      <CheckCircle className="w-3 h-3 mr-1" />
+                      100% MONEY BACK
+                    </div>
+                  </div>
+                  <div className="mb-4">
+                    <p className="text-sm font-medium opacity-90 mb-1">
+                      RETIRE EARLY
+                    </p>
+                    <h2 className="text-2xl font-bold mb-1">MASTER CLASS</h2>
+                    <p className="text-sm opacity-90">
+                      100% Money-back guarantee
+                    </p>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                      <Star className="w-6 h-6 text-yellow-300" />
+                    </div>
+                    <div>
+                      <p className="text-sm opacity-90">With</p>
+                      <p className="font-bold">Nikhil Sharma</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    Personal Finance Masterclass
+                  </h3>
+                  <p className="text-gray-600 mb-6">16th Aug 2025 | 11:00 AM</p>
+                  <div className="space-y-2 mb-6">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <Clock className="w-4 h-4 text-blue-600" />
+                      </div>
+                      <span className="text-gray-700">1 Day Duration</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <Calendar className="w-4 h-4 text-blue-600" />
+                      </div>
+                      <span className="text-gray-700">Live Session</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <Users className="w-4 h-4 text-blue-600" />
+                      </div>
+                      <span className="text-gray-700">
+                        Interactive Workshop
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Pricing Card - Hidden on mobile/tablet due to sticky bar */}
+              <div className="hidden lg:block bg-white rounded-2xl shadow-xl border border-gray-100 p-6">
+                <h3 className="text-lg font-bold text-gray-900 mb-6">
+                  Bill Details
+                </h3>
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-700">Price</span>
+                    <span className="font-bold text-lg">
+                      ₹ {basePrice.toFixed(2)}
+                    </span>
+                  </div>
+                  {discount > 0 && (
+                    <div className="flex justify-between items-center text-green-600">
+                      <span>Discount (20%)</span>
+                      <span className="font-semibold">
+                        - ₹ {discount.toFixed(2)}
+                      </span>
+                    </div>
+                  )}
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-700">GST (18%)</span>
+                    <span className="font-semibold">₹ {gst.toFixed(2)}</span>
+                  </div>
+                  <div className="border-t border-gray-200 mt-4 pt-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-xl font-bold text-gray-900">
+                        To Pay
+                      </span>
+                      <span className="text-xl font-bold text-gray-900">
+                        ₹ {finalPrice.toFixed(2)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  onClick={handleSubmit(onSubmit)}
+                  disabled={isProcessingPayment}
+                  className={`w-full mt-6 py-4 ${
+                    isProcessingPayment
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-blue-700 hover:to-purple-700"
+                  } text-white rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl`}
+                >
+                  {isProcessingPayment ? "Processing..." : "Proceed to Pay"}
+                </button>
+                <div className="mt-6 text-center">
+                  <p className="text-xs text-gray-500 mb-1">
+                    For any queries, please email us at
+                  </p>
+                  <a
+                    href="mailto:support@cashflowcrew.io"
+                    className="text-blue-600 text-sm font-medium hover:underline"
+                  >
+                    support@cashflowcrew.in
+                  </a>
+                  <p className="text-xs text-gray-400 mt-3">
+                    © cashflowcrew Club 2025
+                  </p>
+                  <p className="text-xs text-gray-400">
+                    All Rights Reserved. One Club Ventures Pvt. Ltd.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile/Tablet Sticky Bottom Payment Bar */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-2xl z-50">
+        <div className="px-4 py-3">
+          <div className="flex items-center justify-between">
+            <div className="flex flex-col">
+              <span className="text-lg font-bold text-gray-900">
+                ₹ {finalPrice.toFixed(2)}
+              </span>
+              <span className="text-xs text-gray-500">(incl. GST)</span>
+            </div>
+            <button
+              onClick={handleSubmit(onSubmit)}
+              disabled={isProcessingPayment}
+              className={`px-8 py-3 ${
+                isProcessingPayment
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-blue-700 hover:to-purple-700"
+              } text-white rounded-xl font-bold transition-all duration-200 shadow-lg`}
+            >
+              {isProcessingPayment ? "Processing..." : "Proceed to Pay"}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default MasterClass;
