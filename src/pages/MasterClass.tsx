@@ -70,7 +70,7 @@ const MasterClass = () => {
 
   // Price calculation
   const { basePrice, gst, discount, finalPrice } = useMemo(() => {
-    const basePrice = 499;
+    const basePrice = 299;
     const gst = Math.round(basePrice * 0.18);
     const discount = couponApplied ? Math.round(basePrice * 0.2) : 0;
     const finalPrice = basePrice + gst - discount;
@@ -78,7 +78,7 @@ const MasterClass = () => {
   }, [couponApplied]);
 
   const onSubmit = async (data: FormData) => {
-    data.amount = 1;
+    // data.amount = 1;
     setPaymentStatus(null);
     setIsProcessingPayment(true);
 
