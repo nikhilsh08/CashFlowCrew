@@ -45,21 +45,21 @@ const Status = () => {
     return d.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
   };
 
-  const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
-    masterclass.title
-  )}&dates=${formatCalendarDate(
-    masterclass.date,
-    masterclass.start_time
-  )}/${formatCalendarDate(
-    masterclass.date,
-    masterclass.end_time
-  )}&details=${encodeURIComponent(
-    masterclass.description +
-      "\n\n💻 Meeting Link: " +
-      masterclass.meeting_link +
-      "\n📩 Support: " +
-      masterclass.email
-  )}&location=${encodeURIComponent(masterclass.location)}`;
+  // const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
+  //   masterclass.title
+  // )}&dates=${formatCalendarDate(
+  //   masterclass.date,
+  //   masterclass.start_time
+  // )}/${formatCalendarDate(
+  //   masterclass.date,
+  //   masterclass.end_time
+  // )}&details=${encodeURIComponent(
+  //   masterclass.description +
+  //     "\n\n💻 Meeting Link: " +
+  //     masterclass.meeting_link +
+  //     "\n📩 Support: " +
+  //     masterclass.email
+  // )}&location=${encodeURIComponent(masterclass.location)}`;
 
   const renderContent = () => {
     if (!paymentStatus) {
@@ -85,11 +85,11 @@ const Status = () => {
             <div className="flex justify-center mt-6 items-center gap-x-4">
               <a
                 className="px-6 py-2 bg-gradient-to-r from-indigo-600 to-blue-500 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all"
-                href={googleCalendarUrl}
+                href={masterclass.meeting_link}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Add to Google Calendar
+                Get Webinar Link
               </a>
             </div>
           </>
