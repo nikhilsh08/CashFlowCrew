@@ -406,7 +406,7 @@ const MasterClass = () => {
                   </div>
                   <div className="mb-4">
                     <p className="text-sm font-medium opacity-90 mb-1">
-                      RETIRE EARLY
+                      EQUITY MUTUAL FUNDS
                     </p>
                     <h2 className="text-2xl font-bold mb-1">MASTER CLASS</h2>
                     <p className="text-sm opacity-90">
