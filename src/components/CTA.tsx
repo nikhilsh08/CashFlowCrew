@@ -27,12 +27,10 @@ export const CTA: React.FC = () => {
           onClick={() => navigate("/master-class/register")}
           className="w-full bg-gradient-to-r from-orange-500 to-yellow-500 text-white text-xl font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition duration-200"
         >
-          <div className="flex items-center justify-center space-x-2">
-            <span className="text-2xl font-bold">Enroll Now for ₹{masterclass.price}</span>
-            
-            {/* Original Price with Strike Animation */}
-            <div className="relative">
-              <span className={`text-lg transition-opacity duration-300 ${showStrike ? 'opacity-70' : ''}`}>
+          <span className="text-2xl font-bold">
+            Enroll Now for ₹{masterclass.price}{" "}
+            <span className="relative inline-block text-sm">
+              <span className={`transition-opacity duration-300 ${showStrike ? 'opacity-70' : ''}`}>
                 ₹{originalPrice}
               </span>
               {/* Animated strike line */}
@@ -42,8 +40,8 @@ export const CTA: React.FC = () => {
                 }`}
                 style={{ transform: 'translateY(-50%)' }}
               />
-            </div>
-          </div>
+            </span>
+          </span>
         </button>
         <p className="mt-4 hidden text-gray-600">
           Use code{" "}
