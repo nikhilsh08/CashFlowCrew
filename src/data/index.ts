@@ -45,7 +45,7 @@ export const masterclass = {
   description:
     "EXPOSED: The Risk Analysis Secrets Wall Street Uses to Pick Mutual Funds (That Your Financial Advisor Never Told You About). This intensive 1-day live session will guide you through practical strategies for identifying high-performing mutual funds, managing risk effectively, and building a diversified portfolio for long-term financial growth. You will also gain insider knowledge on how professional fund managers evaluate and rebalance investments. Perfect for beginners and experienced investors looking to sharpen their skills.",
   instructor: "Nikhil Sharma",
-  date: "Aug 30 2025",
+  date: "Aug 24 2025",
   start_time: "12:00",
   end_time: "3:00",
   duration: "1 Day",
@@ -58,7 +58,7 @@ export const masterclass = {
 export const eventDetails: EventDetail[] = [
   { icon: Clock, text: "1 Day" },
   { icon: Video, text: "Live Session" },
-  { icon: Calendar, text: "Aug 30 2025" },
+  { icon: Calendar, text: masterclass.date },
   { icon: Clock, text: `${masterclass.start_time} PM - ${masterclass.end_time} PM IST` },
 ];
 
