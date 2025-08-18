@@ -29,7 +29,7 @@ export const CTA: React.FC = () => {
         >
           <div className="flex mx-auto justify-center items-center space-y-1">
             <div className="flex items-center space-x-3">
-              <span className="text-lg">Enroll Now for</span>
+              <span className="text-lg">Enroll Now for </span>
             </div>
             
             <div className="flex items-center space-x-3">
