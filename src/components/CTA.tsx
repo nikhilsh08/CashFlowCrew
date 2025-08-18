@@ -27,9 +27,9 @@ export const CTA: React.FC = () => {
           onClick={() => navigate("/master-class/register")}
           className="w-full bg-gradient-to-r from-orange-500 to-yellow-500 text-white text-xl font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition duration-200"
         >
-          <div className="flex mx-auto justify-center items-center space-y-1">
+          <div className="flex mx-auto justify-center items-center gap-x-3 space-y-1">
             <div className="flex items-center space-x-3">
-              <span className="text-lg">Enroll Now for </span>
+              <span className="text-lg">Enroll Now for  </span>
             </div>
             
             <div className="flex items-center space-x-3">
