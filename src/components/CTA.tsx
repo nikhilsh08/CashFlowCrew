@@ -27,7 +27,7 @@ export const CTA: React.FC = () => {
           onClick={() => navigate("/master-class/register")}
           className="w-full bg-gradient-to-r from-orange-500 to-yellow-500 text-white text-xl font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition duration-200"
         >
-          <div className="flex items-center justify-center space-x-3">
+          <div className="flex items-center justify-center space-x-2">
             <span className="text-2xl font-bold">Enroll Now for ₹{masterclass.price}</span>
             
             {/* Original Price with Strike Animation */}
