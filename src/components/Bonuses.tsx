@@ -5,8 +5,7 @@ import { masterclass } from "../data";
 export const Bonuses: React.FC = () => {
   // Calculate the total worth of all bonuses
   const totalWorth = bonuses.reduce((sum, bonus) => sum + Number(bonus.worth), 0);
-  console.log("Total worth of bonuses:", totalWorth);
-  console.log("Bonuses data:", bonuses);
+ 
   
  
 
