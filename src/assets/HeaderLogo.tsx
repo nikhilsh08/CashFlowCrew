@@ -1,6 +1,6 @@
 const HeaderLogo = () => {
   return (
-    <div className="max-md:hidden">
+    <div className="max-md:mt-2">
       <svg
         width="52"
         height="52"

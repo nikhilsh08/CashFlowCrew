@@ -17,7 +17,7 @@ export const MoneyBackGuarantee: React.FC = () => {
               100% Money Back Guarantee
             </h3>
             <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto lg:mx-0">
-              If you're not satisfied with the course because it didn't provide
+              If you're not satisfied with the workshop because it didn't provide
               valuable insights into mutual fund investments, you may qualify
               for our{" "}
               <span className="font-bold">

@@ -1,5 +1,4 @@
 import React from 'react';
-import { EventDetail } from '../types';
 import { eventDetails } from '../data';
 
 export const EventDetails: React.FC = () => (

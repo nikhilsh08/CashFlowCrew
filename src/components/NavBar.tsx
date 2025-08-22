@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { DollarSign, X } from "lucide-react";
+import { X } from "lucide-react";
 import HeaderLogo from "../assets/HeaderLogo";
 import { useNavigate } from 'react-router-dom';
 
 const NavBar = () => {
+  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const navigate = useNavigate();
   useEffect(() => {
     
 
@@ -42,13 +42,13 @@ const NavBar = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <div className="flex items-center gap-3">
+          <div onClick={() => navigate("/")} className="flex cursor-pointer items-center gap-3">
             <HeaderLogo />
 
             <div className="flex flex-col">
               {/* Logo row */}
               <div className="flex items-center gap-2">
-                <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-blue-500 text-transparent bg-clip-text">
+                <span className="text-xl font-bold max-md:hidden bg-gradient-to-r from-indigo-600 to-blue-500 text-transparent bg-clip-text">
                   CashFlowCrew
                 </span>
               </div>
@@ -71,7 +71,7 @@ const NavBar = () => {
               onClick={() => scrollToSection("timeline")}
               className="text-gray-600 hover:text-indigo-600 transition-colors font-medium"
             >
-              Course Details
+              workshop Details
             </button>
             {/* <button className="bg-gradient-to-r from-indigo-600 to-blue-500 text-white px-6 py-2.5 rounded-xl font-medium shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5">
                 Enroll Now
@@ -117,7 +117,7 @@ const NavBar = () => {
               onClick={() => scrollToSection("timeline")}
               className="block w-full text-left px-4 py-2 text-gray-600 hover:text-indigo-600 hover:bg-gray-50 rounded-lg transition-colors"
             >
-              Course Details
+              workshop Details
             </button>
             <button onClick={() => navigate("/master-class/register")} className="block w-full px-4 py-2 mt-2 bg-gradient-to-r from-indigo-600 to-blue-500 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all">
               Enroll Now

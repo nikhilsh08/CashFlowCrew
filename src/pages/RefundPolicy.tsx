@@ -39,7 +39,7 @@ export const RefundPolicy: React.FC = () => {
                       100% Money-Back Guarantee
                     </h3>
                     <p className="text-green-700">
-                      If you're not satisfied with the course content within 7
+                      If you're not satisfied with the workshop content within 7
                       days of purchase, we'll provide a full refund.
                     </p>
                   </div>
@@ -56,7 +56,7 @@ export const RefundPolicy: React.FC = () => {
               <p>To be eligible for a refund:</p>
               <ul className="list-disc pl-5 space-y-2">
                 <li>Request must be made within 7 days of purchase</li>
-                <li>Course completion should not exceed 30%</li>
+                <li>workshop completion should not exceed 30%</li>
                 <li>Bonus materials should not be downloaded</li>
                 <li>Request must be submitted through official channels</li>
               </ul>
@@ -93,7 +93,7 @@ export const RefundPolicy: React.FC = () => {
             <div className="space-y-4 text-gray-600">
               <p>The following are not eligible for refund:</p>
               <ul className="list-disc pl-5 space-y-2">
-                <li>Course access after 7 days of purchase</li>
+                <li>workshop access after 7 days of purchase</li>
                 <li>Downloaded bonus materials</li>
                 <li>Special promotional offers marked as non-refundable</li>
               </ul>

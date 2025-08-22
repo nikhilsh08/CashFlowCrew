@@ -4,7 +4,7 @@ import { targetAudience } from '../data';
 
 export const TargetAudience: React.FC = () => (
   <div className="mt-24 max-w-4xl mx-auto px-4">
-    <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">Who is this course for?</h2>
+    <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">Who is this workshop for?</h2>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {targetAudience.map((item) => (
         <div key={item} className="flex items-center gap-4 bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow">

@@ -3,6 +3,9 @@ import { useForm } from "react-hook-form";
 import { CheckCircle, User, Calendar, Clock, Users, Star } from "lucide-react";
 import NavBar from "../components/NavBar";
 import axios from "axios";
+import { masterclass } from "../data";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface FormData {
   firstName: string;
@@ -36,7 +39,6 @@ const MasterClass = () => {
       coupon: "",
       gstNumber: "",
       companyName: "",
-      amount: 0,
     },
   });
 
@@ -70,7 +72,7 @@ const MasterClass = () => {
 
   // Price calculation
   const { basePrice, gst, discount, finalPrice } = useMemo(() => {
-    const basePrice = 499;
+    const basePrice = masterclass.price;
     const gst = Math.round(basePrice * 0.18);
     const discount = couponApplied ? Math.round(basePrice * 0.2) : 0;
     const finalPrice = basePrice + gst - discount;
@@ -78,7 +80,8 @@ const MasterClass = () => {
   }, [couponApplied]);
 
   const onSubmit = async (data: FormData) => {
-    data.amount = 1;
+    console.log("Form Data:", data);
+    data.amount = finalPrice;
     setPaymentStatus(null);
     setIsProcessingPayment(true);
 
@@ -91,12 +94,11 @@ const MasterClass = () => {
       if (response.data.success && response.data.checkoutUrl) {
         setPaymentToken(response.data.checkoutUrl);
       } else {
-        throw new Error("Invalid response from payment service");
+        toast.error("Payment initiation failed. Please try again.");
       }
     } catch (error) {
-      console.error("Error initiating payment:", error);
-      setPaymentStatus("PAYMENT_ERROR");
       setIsProcessingPayment(false);
+      toast.error("Error initiating payment");
     }
   };
 
@@ -390,11 +392,11 @@ const MasterClass = () => {
               </div>
             </div>
 
-            {/* Sidebar - Course Details & Pricing */}
+            {/* Sidebar - workshop Details & Pricing */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Course Card */}
+              {/* workshop Card */}
               <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-                {/* Course Header Image */}
+                {/* workshop Header Image */}
                 <div className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 p-6 text-white">
                   <div className="absolute top-4 right-4">
                     <div className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold flex items-center">
@@ -404,7 +406,7 @@ const MasterClass = () => {
                   </div>
                   <div className="mb-4">
                     <p className="text-sm font-medium opacity-90 mb-1">
-                      RETIRE EARLY
+                      EQUITY MUTUAL FUNDS
                     </p>
                     <h2 className="text-2xl font-bold mb-1">MASTER CLASS</h2>
                     <p className="text-sm opacity-90">

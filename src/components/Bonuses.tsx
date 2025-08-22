@@ -1,19 +1,13 @@
 import React from "react";
 import { bonuses } from "../data"; // Assuming your data file is correctly set up
+import { masterclass } from "../data";
 
 export const Bonuses: React.FC = () => {
   // Calculate the total worth of all bonuses
   const totalWorth = bonuses.reduce((sum, bonus) => sum + Number(bonus.worth), 0);
  
   
-  const nextSaturday = new Date();
-  nextSaturday.setDate(nextSaturday.getDate() + ((6 - nextSaturday.getDay()
-  + 7) % 7)); // Find next Saturday
-  const formattedDate = nextSaturday.toLocaleDateString('en-US', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  });
+ 
 
   return (
     <div className="mt-24 py-16 bg-gradient-to-b from-gray-50 to-white">
@@ -21,7 +15,7 @@ export const Bonuses: React.FC = () => {
         <div className="text-center mb-12">
           {/* Kept the original heading */}
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Register before midnight of {formattedDate} .
+            Register before midnight of {masterclass.date} .
           </h2>
           {/* Added a new, prominent heading for the bonus value */}
           <p className="text-2xl md:text-3xl font-semibold text-gray-800">
@@ -68,3 +62,4 @@ export const Bonuses: React.FC = () => {
     </div>
   );
 };
+

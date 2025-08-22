@@ -28,7 +28,7 @@ export const TermsAndConditions: React.FC = () => {
               This website is operated by Nikhil Sharma
             </h1>
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              1. Course Access
+              1. workshop Access
             </h2>
             <div className="space-y-4 text-gray-600">
               <p>
@@ -47,7 +47,7 @@ export const TermsAndConditions: React.FC = () => {
               2. Intellectual Property
             </h2>
             <div className="space-y-4 text-gray-600">
-              <p>All course materials, including but not limited to:</p>
+              <p>All workshop materials, including but not limited to:</p>
               <ul className="list-disc pl-5 space-y-2">
                 <li>Video content</li>
                 <li>Written materials</li>
@@ -67,7 +67,7 @@ export const TermsAndConditions: React.FC = () => {
             </h2>
             <div className="space-y-4 text-gray-600">
               <p>
-                The course content is for educational purposes only and does not
+                The workshop content is for educational purposes only and does not
                 constitute financial advice. We do not guarantee any specific
                 returns or investment outcomes.
               </p>
@@ -85,7 +85,7 @@ export const TermsAndConditions: React.FC = () => {
               4. User Conduct
             </h2>
             <p className="text-gray-600">
-              Users agree not to share login credentials, reproduce course
+              Users agree not to share login credentials, reproduce workshop
               materials, or engage in any activity that violates these terms or
               applicable laws.
             </p>

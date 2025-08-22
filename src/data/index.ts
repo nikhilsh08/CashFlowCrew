@@ -22,13 +22,14 @@ import {
 } from 'lucide-react';
 import { Testimonial, EventDetail, Experience, TimelineItem, Bonus } from '../types';
 
-const today = new Date().toLocaleDateString('en-US', {
+export const today = new Date().toLocaleDateString('en-US', {
   day: 'numeric',
   month: 'long',
   year: 'numeric'
 });
 
-const nextSaturday = new Date();
+export const formatdate = () =>{
+   const nextSaturday = new Date();
   nextSaturday.setDate(nextSaturday.getDate() + ((6 - nextSaturday.getDay()
   + 7) % 7)); // Find next Saturday
   const formattedDate = nextSaturday.toLocaleDateString('en-US', {
@@ -36,11 +37,29 @@ const nextSaturday = new Date();
     month: 'long',
     year: 'numeric'
   });
+  return formattedDate;
+}
+export const masterclass = {
+  email: "support@cashflowcrew.com",
+  title: "Master Mutual Funds: Invest Smarter",
+  description:
+    "EXPOSED: The Risk Analysis Secrets Wall Street Uses to Pick Mutual Funds (That Your Financial Advisor Never Told You About). This intensive 1-day live session will guide you through practical strategies for identifying high-performing mutual funds, managing risk effectively, and building a diversified portfolio for long-term financial growth. You will also gain insider knowledge on how professional fund managers evaluate and rebalance investments. Perfect for beginners and experienced investors looking to sharpen their skills.",
+  instructor: "Nikhil Sharma",
+  date: "Aug 24 2025",
+  start_time: "12:00",
+  end_time: "3:00",
+  duration: "1 Day",
+  price: 249,
+  location: "Online - Live Session",
+  meeting_link: "https://live.zoho.in/htfh-bxb-jlt",
+  currency: "INR"
+};
+
 export const eventDetails: EventDetail[] = [
   { icon: Clock, text: "1 Day" },
   { icon: Video, text: "Live Session" },
-  { icon: Calendar, text: formattedDate },
-  { icon: Clock, text: "4 PM – 7 PM IST" },
+  { icon: Calendar, text: masterclass.date },
+  { icon: Clock, text: `${masterclass.start_time} PM - ${masterclass.end_time} PM IST` },
 ];
 
 export const testimonials: Testimonial[] = [
@@ -50,7 +69,7 @@ export const testimonials: Testimonial[] = [
     messages: [
       { type: "student", text: "Sir, your SIP vs lumpsum explanation was GOLD! 🙌", time: "9:41 AM" },
       { type: "instructor", text: "Keep investing consistently! 🚀", time: "9:45 AM" },
-      { type: "student", text: "Will do! This course changed everything for me 😃", time: "9:46 AM" }
+      { type: "student", text: "Will do! This workshop changed everything for me 😃", time: "9:46 AM" }
     ]
   },
   {
@@ -68,7 +87,7 @@ export const testimonials: Testimonial[] = [
     messages: [
       { type: "student", text: "Love how practical the portfolio analysis was! 📈", time: "7:30 PM" },
       { type: "instructor", text: "Glad it helped! Keep applying these concepts 💡", time: "7:35 PM" },
-      { type: "student", text: "Best investment course ever! Worth every penny 💯", time: "7:36 PM" }
+      { type: "student", text: "Best investment workshop ever! Worth every penny 💯", time: "7:36 PM" }
     ]
   }
 ];
@@ -194,3 +213,10 @@ export const bonuses: Bonus[] = [
     worth: 1500
   }
 ];
+
+
+
+
+
+
+
