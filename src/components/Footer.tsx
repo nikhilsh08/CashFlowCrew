@@ -54,7 +54,7 @@ export const Footer: React.FC = () => {
                   onClick={() => scrollToSection("timeline")}
                   className="text-gray-600 hover:text-indigo-600 transition-colors"
                 >
-                  Course Details
+                  workshop Details
                 </button>
               </li>
               <li>

@@ -289,7 +289,7 @@ export const PrivacyPolicy: React.FC = () => {
               <p>
                 We use 256 BIT bit level of SSL standard data protection
                 practices and technologies, and your data is therefore protected
-                in the course of transmission. Your data security is important
+                in the workshop of transmission. Your data security is important
                 to us, however as no method of transmission over the internet or
                 any method of electronic storage is completely secure, we cannot
                 guarantee you absolute security of your data.

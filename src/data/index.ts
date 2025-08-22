@@ -69,7 +69,7 @@ export const testimonials: Testimonial[] = [
     messages: [
       { type: "student", text: "Sir, your SIP vs lumpsum explanation was GOLD! 🙌", time: "9:41 AM" },
       { type: "instructor", text: "Keep investing consistently! 🚀", time: "9:45 AM" },
-      { type: "student", text: "Will do! This course changed everything for me 😃", time: "9:46 AM" }
+      { type: "student", text: "Will do! This workshop changed everything for me 😃", time: "9:46 AM" }
     ]
   },
   {
@@ -87,7 +87,7 @@ export const testimonials: Testimonial[] = [
     messages: [
       { type: "student", text: "Love how practical the portfolio analysis was! 📈", time: "7:30 PM" },
       { type: "instructor", text: "Glad it helped! Keep applying these concepts 💡", time: "7:35 PM" },
-      { type: "student", text: "Best investment course ever! Worth every penny 💯", time: "7:36 PM" }
+      { type: "student", text: "Best investment workshop ever! Worth every penny 💯", time: "7:36 PM" }
     ]
   }
 ];

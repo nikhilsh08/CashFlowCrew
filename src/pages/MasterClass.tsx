@@ -392,11 +392,11 @@ const MasterClass = () => {
               </div>
             </div>
 
-            {/* Sidebar - Course Details & Pricing */}
+            {/* Sidebar - workshop Details & Pricing */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Course Card */}
+              {/* workshop Card */}
               <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-                {/* Course Header Image */}
+                {/* workshop Header Image */}
                 <div className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 p-6 text-white">
                   <div className="absolute top-4 right-4">
                     <div className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold flex items-center">
