@@ -71,7 +71,7 @@ const NavBar = () => {
               onClick={() => scrollToSection("timeline")}
               className="text-gray-600 hover:text-indigo-600 transition-colors font-medium"
             >
-              workshop Details
+              Workshop Details
             </button>
             {/* <button className="bg-gradient-to-r from-indigo-600 to-blue-500 text-white px-6 py-2.5 rounded-xl font-medium shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5">
                 Enroll Now
@@ -117,7 +117,7 @@ const NavBar = () => {
               onClick={() => scrollToSection("timeline")}
               className="block w-full text-left px-4 py-2 text-gray-600 hover:text-indigo-600 hover:bg-gray-50 rounded-lg transition-colors"
             >
-              workshop Details
+              Workshop Details
             </button>
             <button onClick={() => navigate("/master-class/register")} className="block w-full px-4 py-2 mt-2 bg-gradient-to-r from-indigo-600 to-blue-500 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all">
               Enroll Now
