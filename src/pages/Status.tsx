@@ -63,7 +63,6 @@ const Status = () => {
       );
       
       setPaymentStatus(response.data);
-      
       // CRITICAL: Only fire Purchase event if payment was successful
       if (response.data.success && response.data.status === "COMPLETED") {
         
@@ -73,7 +72,9 @@ const Status = () => {
         // Update user record
         const update = await axios.put(
           `${import.meta.env.VITE_SERVER_URL}/api/v1/users/update/${id}`,
-          { paymentStatus: response.data, transaction: response.data.success }
+          { paymentStatus: response.data, transaction: response.data.success, Value: response.data.data.amount,
+            Currency: "INR"
+           }
         );
       }
     } catch (error) {
