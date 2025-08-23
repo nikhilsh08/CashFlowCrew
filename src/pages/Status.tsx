@@ -75,10 +75,7 @@ const Status = () => {
           `${import.meta.env.VITE_SERVER_URL}/api/v1/users/update/${id}`,
           { paymentStatus: response.data, transaction: response.data.success }
         );
-        console.log("Payment Status Updated user:", update.data);
       }
-      
-      console.log("Payment Status Response:", response.data);
     } catch (error) {
       console.error("Error checking payment status:", error);
       toast.error("Error checking payment status");
