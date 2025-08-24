@@ -425,9 +425,9 @@ const MasterClass = () => {
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    Personal Finance Masterclass
+                    {masterclass?.title}
                   </h3>
-                  <p className="text-gray-600 mb-6">16th Aug 2025 | 11:00 AM</p>
+                  <p className="text-gray-600 mb-6">{masterclass?.date} | {masterclass?.start_time} PM</p>
                   <div className="space-y-2 mb-6">
                     <div className="flex items-center space-x-3">
                       <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
