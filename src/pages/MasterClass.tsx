@@ -25,7 +25,7 @@ const MasterClass = () => {
   const [paymentStatus, setPaymentStatus] = useState<string | null>(null);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const location = useLocation();
-  console.log("Current location:", location);
+  // console.log("Current location:", location);
   const isFinanceBootCamp = location.pathname.includes("finance-bootcamp");
 
   const {
