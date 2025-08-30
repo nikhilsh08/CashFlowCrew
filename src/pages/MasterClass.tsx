@@ -1,12 +1,12 @@
 import { useEffect, useState, useMemo } from "react";
-import { useForm } from "react-hook-form";
+import {  useForm } from "react-hook-form";
 import { CheckCircle, User, Calendar, Clock, Users, Star } from "lucide-react";
 import NavBar from "../components/NavBar";
 import axios from "axios";
 import { masterclass } from "../data";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useLocation } from 'react-router-dom';
 interface FormData {
   firstName: string;
   lastName: string;
@@ -24,12 +24,16 @@ const MasterClass = () => {
   const [paymentToken, setPaymentToken] = useState<string | null>(null);
   const [paymentStatus, setPaymentStatus] = useState<string | null>(null);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const location = useLocation();
+  console.log("Current location:", location);
+  const isFinanceBootCamp = location.pathname.includes("finance-bootcamp");
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
+    reset,
   } = useForm<FormData>({
     defaultValues: {
       firstName: "",
@@ -71,16 +75,27 @@ const MasterClass = () => {
   };
 
   // Price calculation
-  const { basePrice, gst, discount, finalPrice } = useMemo(() => {
-    const basePrice = masterclass.price;
-    const gst = Math.round(basePrice * 0.18);
-    const discount = couponApplied ? Math.round(basePrice * 0.2) : 0;
-    const finalPrice = basePrice + gst - discount;
-    return { basePrice, gst, discount, finalPrice };
-  }, [couponApplied]);
+ const { basePrice, gst, discount, finalPrice } = useMemo(() => {
+  const basePrice = isFinanceBootCamp ? 2999 : masterclass.price;
+  const gst = Math.round(basePrice * 0.18);
+  const discount = couponApplied ? Math.round(basePrice * 0.2) : 0;
+  const finalPrice = basePrice + gst - discount;
+  return { basePrice, gst, discount, finalPrice };
+}, [couponApplied, isFinanceBootCamp]);
+
+
+  // get local storage data and use react hook form and prefiled with it
+  let storedData
+  useEffect(() => {
+    storedData = localStorage.getItem("masterclass_registration");
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+      reset(parsedData);
+    }
+  }, [reset]);
 
   const onSubmit = async (data: FormData) => {
-    console.log("Form Data:", data);
+    localStorage.setItem("masterclass_registration", JSON.stringify(data));
     data.amount = finalPrice;
     setPaymentStatus(null);
     setIsProcessingPayment(true);
@@ -116,7 +131,7 @@ const MasterClass = () => {
   // Open payment page only when token changes
   useEffect(() => {
     if (paymentToken) {
-      window.open(paymentToken,"_self","noopener,noreferrer");
+      window.open(paymentToken, "_self", "noopener,noreferrer");
       setIsProcessingPayment(false);
     }
   }, [paymentToken]);
@@ -138,49 +153,49 @@ const MasterClass = () => {
   //   }
   // }, [paymentToken]);
 
-  // Success screen
-  if (paymentStatus === "PAYMENT_SUCCESS") {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="p-10 bg-white rounded-xl shadow-2xl max-w-md text-center">
-          <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold">Payment Successful!</h2>
-          <p className="text-gray-600 mb-4">
-            Thank you for your purchase. Check your email for confirmation.
-          </p>
-          <button
-            onClick={() => (window.location.href = "/")}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg"
-          >
-            Go Back
-          </button>
-        </div>
-      </div>
-    );
-  }
+  // // Success screen
+  // if (paymentStatus === "PAYMENT_SUCCESS") {
+  //   return (
+  //     <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+  //       <div className="p-10 bg-white rounded-xl shadow-2xl max-w-md text-center">
+  //         <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
+  //         <h2 className="text-2xl font-bold">Payment Successful!</h2>
+  //         <p className="text-gray-600 mb-4">
+  //           Thank you for your purchase. Check your email for confirmation.
+  //         </p>
+  //         <button
+  //           onClick={() => (window.location.href = "/")}
+  //           className="px-6 py-2 bg-blue-600 text-white rounded-lg"
+  //         >
+  //           Go Back
+  //         </button>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
-  // Cancelled screen
-  if (paymentStatus === "PAYMENT_CANCELLED") {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="p-10 bg-white rounded-xl shadow-2xl max-w-md text-center">
-          <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            ⚠️
-          </div>
-          <h2 className="text-2xl font-bold">Payment Cancelled</h2>
-          <p className="text-gray-600 mb-4">
-            You cancelled the payment. Please try again.
-          </p>
-          <button
-            onClick={() => setPaymentStatus(null)}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg"
-          >
-            Try Again
-          </button>
-        </div>
-      </div>
-    );
-  }
+  // // Cancelled screen
+  // if (paymentStatus === "PAYMENT_CANCELLED") {
+  //   return (
+  //     <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+  //       <div className="p-10 bg-white rounded-xl shadow-2xl max-w-md text-center">
+  //         <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+  //           ⚠️
+  //         </div>
+  //         <h2 className="text-2xl font-bold">Payment Cancelled</h2>
+  //         <p className="text-gray-600 mb-4">
+  //           You cancelled the payment. Please try again.
+  //         </p>
+  //         <button
+  //           onClick={() => setPaymentStatus(null)}
+  //           className="px-6 py-2 bg-blue-600 text-white rounded-lg"
+  //         >
+  //           Try Again
+  //         </button>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -427,7 +442,7 @@ const MasterClass = () => {
                   <h3 className="text-xl font-bold text-gray-900 mb-2">
                     {masterclass?.title}
                   </h3>
-                  <p className="text-gray-600 mb-6">{masterclass?.date} | {masterclass?.start_time} PM</p>
+                  <p className="text-gray-600 mb-6">{isFinanceBootCamp ? "Sept 16 2025" : masterclass?.date} | {masterclass?.start_time} PM</p>
                   <div className="space-y-2 mb-6">
                     <div className="flex items-center space-x-3">
                       <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -491,11 +506,10 @@ const MasterClass = () => {
                 <button
                   onClick={handleSubmit(onSubmit)}
                   disabled={isProcessingPayment}
-                  className={`w-full mt-6 py-4 ${
-                    isProcessingPayment
+                  className={`w-full mt-6 py-4 ${isProcessingPayment
                       ? "bg-gray-400 cursor-not-allowed"
                       : "bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-blue-700 hover:to-purple-700"
-                  } text-white rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl`}
+                    } text-white rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl`}
                 >
                   {isProcessingPayment ? "Processing..." : "Proceed to Pay"}
                 </button>
@@ -535,11 +549,10 @@ const MasterClass = () => {
             <button
               onClick={handleSubmit(onSubmit)}
               disabled={isProcessingPayment}
-              className={`px-8 py-3 ${
-                isProcessingPayment
+              className={`px-8 py-3 ${isProcessingPayment
                   ? "bg-gray-400 cursor-not-allowed"
                   : "bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-blue-700 hover:to-purple-700"
-              } text-white rounded-xl font-bold transition-all duration-200 shadow-lg`}
+                } text-white rounded-xl font-bold transition-all duration-200 shadow-lg`}
             >
               {isProcessingPayment ? "Processing..." : "Proceed to Pay"}
             </button>

@@ -89,6 +89,7 @@ const AppContent: React.FC = () => {
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/payment/status/:id" element={<Status />} />
         <Route path="/master-class/register" element={<MasterClass />} />
+        <Route path="/finance-bootcamp/register" element={<MasterClass />} />
       </Routes>
     </div>
   );
