@@ -79,7 +79,7 @@ const MasterClass = () => {
   const basePrice = isFinanceBootCamp ? 2999 : masterclass.price;
   const gst = Math.round(basePrice * 0.18);
   const discount = couponApplied ? Math.round(basePrice * 0.2) : 0;
-  const finalPrice = basePrice + gst - discount;
+  const finalPrice = isFinanceBootCamp?basePrice:basePrice + gst - discount;
   return { basePrice, gst, discount, finalPrice };
 }, [couponApplied, isFinanceBootCamp]);
 
@@ -423,7 +423,7 @@ const MasterClass = () => {
                     <p className="text-sm font-medium opacity-90 mb-1">
                       EQUITY MUTUAL FUNDS
                     </p>
-                    <h2 className="text-2xl font-bold mb-1">MASTER CLASS</h2>
+                    <h2 className="text-2xl font-bold mb-1">{isFinanceBootCamp?"BOOTCAMP":"MASTER CLASS"}</h2>
                     <p className="text-sm opacity-90">
                       100% Money-back guarantee
                     </p>
@@ -442,13 +442,13 @@ const MasterClass = () => {
                   <h3 className="text-xl font-bold text-gray-900 mb-2">
                     {masterclass?.title}
                   </h3>
-                  <p className="text-gray-600 mb-6">{isFinanceBootCamp ? "Sept 16 2025" : masterclass?.date} | {masterclass?.start_time} PM</p>
+                  <p className="text-gray-600 mb-6">{isFinanceBootCamp ? "Sept 19 2025" : masterclass?.date} | {isFinanceBootCamp?"1:00":masterclass?.start_time} PM</p>
                   <div className="space-y-2 mb-6">
                     <div className="flex items-center space-x-3">
                       <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
                         <Clock className="w-4 h-4 text-blue-600" />
                       </div>
-                      <span className="text-gray-700">1 Day Duration</span>
+                      <span className="text-gray-700">{isFinanceBootCamp ? "2" : '1'} Day Duration</span>
                     </div>
                     <div className="flex items-center space-x-3">
                       <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -488,7 +488,7 @@ const MasterClass = () => {
                       </span>
                     </div>
                   )}
-                  <div className="flex justify-between items-center">
+                  <div className={`flex justify-between items-center ${isFinanceBootCamp ? 'hidden' : ''}`}>
                     <span className="text-gray-700">GST (18%)</span>
                     <span className="font-semibold">₹ {gst.toFixed(2)}</span>
                   </div>
