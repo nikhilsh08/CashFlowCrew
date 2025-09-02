@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import {  useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { CheckCircle, User, Calendar, Clock, Users, Star } from "lucide-react";
 import NavBar from "../components/NavBar";
 import axios from "axios";
@@ -13,6 +13,7 @@ interface FormData {
   email: string;
   phone: string;
   coupon?: string;
+  city: string;
   gstNumber?: string;
   companyName?: string;
   amount: number;
@@ -39,6 +40,7 @@ const MasterClass = () => {
       firstName: "",
       lastName: "",
       email: "",
+      city: "",
       phone: "",
       coupon: "",
       gstNumber: "",
@@ -46,26 +48,26 @@ const MasterClass = () => {
     },
   });
 
-  const allowedEmailDomains = [
-    "gmail.com",
-    "icloud.com",
-    "me.com",
-    "mac.com",
-    "outlook.com",
-    "hotmail.com",
-    "live.com",
-    "msn.com",
-    "zoho.com",
-    "zohomail.com",
-  ];
+  // const allowedEmailDomains = [
+  //   "gmail.com",
+  //   "icloud.com",
+  //   "me.com",
+  //   "mac.com",
+  //   "outlook.com",
+  //   "hotmail.com",
+  //   "live.com",
+  //   "msn.com",
+  //   "zoho.com",
+  //   "zohomail.com",
+  // ];
 
-  const validateEmail = (email: string) => {
-    const domain = email.split("@")[1];
-    return (
-      allowedEmailDomains.includes(domain?.toLowerCase()) ||
-      "Please use Gmail, Apple Mail, Microsoft, or Zoho email only"
-    );
-  };
+  // const validateEmail = (email: string) => {
+  //   const domain = email.split("@")[1];
+  //   return (
+  //     allowedEmailDomains.includes(domain?.toLowerCase()) ||
+  //     "Please use Gmail, Apple Mail, Microsoft, or Zoho email only"
+  //   );
+  // };
 
   const validatePhone = (phone: string) => {
     const phoneRegex = /^[6-9]\d{9}$/;
@@ -75,13 +77,13 @@ const MasterClass = () => {
   };
 
   // Price calculation
- const { basePrice, gst, discount, finalPrice } = useMemo(() => {
-  const basePrice = isFinanceBootCamp ? 2999 : masterclass.price;
-  const gst = Math.round(basePrice * 0.18);
-  const discount = couponApplied ? Math.round(basePrice * 0.2) : 0;
-  const finalPrice = isFinanceBootCamp?basePrice:basePrice + gst - discount;
-  return { basePrice, gst, discount, finalPrice };
-}, [couponApplied, isFinanceBootCamp]);
+  const { basePrice, gst, discount, finalPrice } = useMemo(() => {
+    const basePrice = isFinanceBootCamp ? 2999 : masterclass.price;
+    const gst = Math.round(basePrice * 0.18);
+    const discount = couponApplied ? Math.round(basePrice * 0.2) : 0;
+    const finalPrice = isFinanceBootCamp ? basePrice : basePrice + gst - discount;
+    return { basePrice, gst, discount, finalPrice };
+  }, [couponApplied, isFinanceBootCamp]);
 
 
   // get local storage data and use react hook form and prefiled with it
@@ -299,7 +301,6 @@ const MasterClass = () => {
                       <input
                         {...register("email", {
                           required: "Email is required",
-                          validate: validateEmail,
                         })}
                         type="email"
                         placeholder="Enter Email"
@@ -311,6 +312,7 @@ const MasterClass = () => {
                         </p>
                       )}
                     </div>
+
 
                     <div className="mb-6">
                       <div className="flex border border-gray-300 rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-blue-500 transition-all duration-200">
@@ -332,12 +334,28 @@ const MasterClass = () => {
                           type="tel"
                           placeholder="Enter Phone Number"
                           maxLength={10}
+                          minLength={10}
                           className="flex-1 px-5 py-4 bg-gray-50 text-gray-900 placeholder-gray-500 outline-none"
                         />
                       </div>
                       {errors.phone && (
                         <p className="text-red-500 text-sm mt-2 ml-2">
                           {errors.phone.message}
+                        </p>
+                      )}
+                    </div>
+                    <div className="mb-6">
+                      <input
+                        {...register("city", {
+                          required: "City is required",
+                        })}
+                        type="text"
+                        placeholder="City, State"
+                        className="w-full px-5 py-4 bg-gray-50 text-gray-900 placeholder-gray-500 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                      />
+                      {errors.city && (
+                        <p className="text-red-500 text-sm mt-2">
+                          {errors.city.message}
                         </p>
                       )}
                     </div>
@@ -423,7 +441,7 @@ const MasterClass = () => {
                     <p className="text-sm font-medium opacity-90 mb-1">
                       EQUITY MUTUAL FUNDS
                     </p>
-                    <h2 className="text-2xl font-bold mb-1">{isFinanceBootCamp?"BOOTCAMP":"MASTER CLASS"}</h2>
+                    <h2 className="text-2xl font-bold mb-1">{isFinanceBootCamp ? "BOOTCAMP" : "MASTER CLASS"}</h2>
                     <p className="text-sm opacity-90">
                       100% Money-back guarantee
                     </p>
@@ -442,7 +460,7 @@ const MasterClass = () => {
                   <h3 className="text-xl font-bold text-gray-900 mb-2">
                     {masterclass?.title}
                   </h3>
-                  <p className="text-gray-600 mb-6">{isFinanceBootCamp ? "Sept 19 2025" : masterclass?.date} | {isFinanceBootCamp?"1:00":masterclass?.start_time} PM</p>
+                  <p className="text-gray-600 mb-6">{isFinanceBootCamp ? "Sept 19 2025" : masterclass?.date} | {isFinanceBootCamp ? "1:00" : masterclass?.start_time} PM</p>
                   <div className="space-y-2 mb-6">
                     <div className="flex items-center space-x-3">
                       <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -507,8 +525,8 @@ const MasterClass = () => {
                   onClick={handleSubmit(onSubmit)}
                   disabled={isProcessingPayment}
                   className={`w-full mt-6 py-4 ${isProcessingPayment
-                      ? "bg-gray-400 cursor-not-allowed"
-                      : "bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-blue-700 hover:to-purple-700"
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-blue-700 hover:to-purple-700"
                     } text-white rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl`}
                 >
                   {isProcessingPayment ? "Processing..." : "Proceed to Pay"}
@@ -550,8 +568,8 @@ const MasterClass = () => {
               onClick={handleSubmit(onSubmit)}
               disabled={isProcessingPayment}
               className={`px-8 py-3 ${isProcessingPayment
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-blue-700 hover:to-purple-700"
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-blue-700 hover:to-purple-700"
                 } text-white rounded-xl font-bold transition-all duration-200 shadow-lg`}
             >
               {isProcessingPayment ? "Processing..." : "Proceed to Pay"}
