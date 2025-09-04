@@ -1,10 +1,12 @@
 import React from "react";
 import { Plus, Minus } from "lucide-react";
 import { Link } from "react-router-dom";
-import { masterclass } from "../data";
+import { masterclassConfig } from "../data";
+import { formatdate } from "../lib/utils";
 
 export const FAQ: React.FC = () => {
   const [openIndex, setOpenIndex] = React.useState<number | null>(null);
+  const masterclass = masterclassConfig();
 
   const faqs = [
     {
@@ -29,7 +31,7 @@ export const FAQ: React.FC = () => {
     },
     {
       question: "Is this a live webinar or pre-recorded?",
-      answer: `This is a live interactive webinar scheduled for ${masterclass.date}, from ${masterclass.start_time} PM to ${masterclass.end_time} PM IST. You'll be able to ask questions in real-time and interact with the instructor and other participants.`,
+      answer: `This is a live interactive webinar scheduled for ${formatdate(masterclass[1].date)}, from ${masterclass[1].start_time} PM to ${masterclass[1].end_time} PM IST. You'll be able to ask questions in real-time and interact with the instructor and other participants.`,
     },
     // {
     //   question: "What if I can't attend the live webinar session?",

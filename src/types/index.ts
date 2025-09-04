@@ -88,3 +88,23 @@ export interface InstrumentInfo {
   cardNetwork?: string; // e.g. "VISA"
   maskedCardNumber?: string;
 }
+
+export interface Masterclass {
+  email: string;
+  title: string;
+  description: string;
+  instructor: string;
+  date: string;
+  start_time: string;
+  end_time: string;
+  duration: string;
+  price: number;
+  location: string;
+  meeting_link: string;
+  currency: string;
+  isRegistrationOpen: boolean;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  _id: string;
+}

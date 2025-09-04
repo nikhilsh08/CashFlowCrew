@@ -1,10 +1,12 @@
 import React from "react";
 import { bonuses } from "../data"; // Assuming your data file is correctly set up
-import { masterclass } from "../data";
+import { masterclassConfig } from "../data";
+import { formatdate } from "../lib/utils";
 
 export const Bonuses: React.FC = () => {
   // Calculate the total worth of all bonuses
   const totalWorth = bonuses.reduce((sum, bonus) => sum + Number(bonus.worth), 0);
+  const masterclass = masterclassConfig();
  
   
  
@@ -15,7 +17,7 @@ export const Bonuses: React.FC = () => {
         <div className="text-center mb-12">
           {/* Kept the original heading */}
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Register before midnight of {masterclass.date} .
+            Register before midnight of {formatdate(masterclass[1].date)} .
           </h2>
           {/* Added a new, prominent heading for the bonus value */}
           <p className="text-2xl md:text-3xl font-semibold text-gray-800">

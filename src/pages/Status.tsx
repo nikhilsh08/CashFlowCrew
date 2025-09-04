@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { PhonePePaymentStatusResponse } from "../types";
 import { CheckCircle, Clock, XCircle } from "lucide-react";
-import { masterclass } from "../data";
+import { masterclassConfig } from "../data";
 import { toast } from "react-toastify";
 
 // Declare fbq for TypeScript
@@ -15,6 +15,7 @@ declare global {
 }
 
 const Status = () => {
+  const masterclass = masterclassConfig()[1]; 
   const navigate = useNavigate();
   const { id } = useParams();
   const [paymentStatus, setPaymentStatus] = useState<PhonePePaymentStatusResponse | null>(null);
@@ -46,11 +47,11 @@ const Status = () => {
         eventID: transactionId // For deduplication
       });
       
-      console.log('Facebook Purchase event fired:', {
-        value: amount,
-        currency: 'INR',
-        transaction_id: transactionId
-      });
+      // console.log('Facebook Purchase event fired:', {
+      //   value: amount,
+      //   currency: 'INR',
+      //   transaction_id: transactionId
+      // });
       
       setConversionFired(true);
     }

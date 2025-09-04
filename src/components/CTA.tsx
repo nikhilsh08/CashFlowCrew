@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import { masterclass } from "../data";
+import { masterclassConfig } from "../data";
 
 export const CTA: React.FC = () => {
   const navigate = useNavigate();
   const [showStrike, setShowStrike] = useState(false);
   const [showNewPrice, setShowNewPrice] = useState(false);
+  const masterclass = masterclassConfig();
   
   const originalPrice = 999;
   
@@ -28,7 +29,7 @@ export const CTA: React.FC = () => {
           className="w-full bg-gradient-to-r from-orange-500 to-yellow-500 text-white text-xl font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition duration-200"
         >
           <span className="text-2xl font-bold">
-            Enroll Now for ₹{masterclass.price}{" "}
+            Enroll Now for ₹{masterclass[1].price}{" "}
             <span className="relative inline-block text-sm">
               <span className={`transition-opacity duration-300 ${showStrike ? 'opacity-70' : ''}`}>
                 ₹{originalPrice}

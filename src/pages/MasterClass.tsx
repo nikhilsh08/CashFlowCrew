@@ -3,10 +3,11 @@ import { useForm } from "react-hook-form";
 import { CheckCircle, User, Calendar, Clock, Users, Star } from "lucide-react";
 import NavBar from "../components/NavBar";
 import axios from "axios";
-import { masterclass } from "../data";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useLocation } from 'react-router-dom';
+import type { Masterclass } from "../types";
+import { formatdate } from "../lib/utils";
 interface FormData {
   firstName: string;
   lastName: string;
@@ -19,9 +20,10 @@ interface FormData {
   amount: number;
 }
 
-const MasterClass = () => {
+const MasterClass = ({ masterclass }: { masterclass: Masterclass | null }) => {
   const [showGSTFields, setShowGSTFields] = useState(false);
   const [couponApplied, setCouponApplied] = useState(false);
+  const [couponPrice, setCouponPrice] = useState(0);
   const [paymentToken, setPaymentToken] = useState<string | null>(null);
   const [paymentStatus, setPaymentStatus] = useState<string | null>(null);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
@@ -75,16 +77,38 @@ const MasterClass = () => {
       phoneRegex.test(phone) || "Enter a valid 10-digit Indian mobile number"
     );
   };
+  const handleApplyCoupon = async () =>{
+    const couponCode = watch("coupon")?.toLowerCase();
+    // console.log("masterclass", masterclass);
+    try {
+      const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/v1/users/apply-coupon`, { code: couponCode,masterClassId: masterclass?._id });
+      // console.log("apply coupon res", res.data);
+
+      if(res.data.success){
+        setCouponApplied(true);
+        toast.success("Coupon applied! ₹"+res.data.discountedAmount+" discount added.");
+        setCouponPrice(res.data.discountedAmount);
+      }
+
+
+    } catch (error:any) {
+      toast.error(error?.response?.data?.message || "Error applying coupon");
+      // console.error("Error applying coupon", error);
+      
+    }
+  }
 
   // Price calculation
   const { basePrice, gst, discount, finalPrice } = useMemo(() => {
-    const basePrice = isFinanceBootCamp ? 2999 : masterclass.price;
+    const basePrice = masterclass?.price || 0;
     const gst = Math.round(basePrice * 0.18);
-    const discount = couponApplied ? Math.round(basePrice * 0.2) : 0;
-    const finalPrice = isFinanceBootCamp ? basePrice : basePrice + gst - discount;
+    const discount = couponApplied ? couponPrice : 0; // Replace with actual discount logic if needed
+    const finalPrice = basePrice + gst - discount;
     return { basePrice, gst, discount, finalPrice };
-  }, [couponApplied, isFinanceBootCamp]);
+  }, [couponApplied, couponPrice]);
 
+
+// console.log("masterclass discounted price", couponPrice);
 
   // get local storage data and use react hook form and prefiled with it
   let storedData
@@ -408,7 +432,7 @@ const MasterClass = () => {
                       />
                       <button
                         type="button"
-                        onClick={applyCoupon}
+                        onClick={handleApplyCoupon}
                         className="absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg font-semibold text-sm transition-all duration-200"
                       >
                         Apply
@@ -460,13 +484,13 @@ const MasterClass = () => {
                   <h3 className="text-xl font-bold text-gray-900 mb-2">
                     {masterclass?.title}
                   </h3>
-                  <p className="text-gray-600 mb-6">{isFinanceBootCamp ? "Sept 19 2025" : masterclass?.date} | {isFinanceBootCamp ? "1:00" : masterclass?.start_time} PM</p>
+                  <p className="text-gray-600 mb-6">{formatdate(masterclass?.date ?? "")} | { masterclass?.start_time} PM</p>
                   <div className="space-y-2 mb-6">
                     <div className="flex items-center space-x-3">
                       <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
                         <Clock className="w-4 h-4 text-blue-600" />
                       </div>
-                      <span className="text-gray-700">{isFinanceBootCamp ? "2" : '1'} Day Duration</span>
+                      <span className="text-gray-700">{"1"} Day Duration</span>
                     </div>
                     <div className="flex items-center space-x-3">
                       <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -500,13 +524,13 @@ const MasterClass = () => {
                   </div>
                   {discount > 0 && (
                     <div className="flex justify-between items-center text-green-600">
-                      <span>Discount (20%)</span>
+                      <span>Discount </span>
                       <span className="font-semibold">
                         - ₹ {discount.toFixed(2)}
                       </span>
                     </div>
                   )}
-                  <div className={`flex justify-between items-center ${isFinanceBootCamp ? 'hidden' : ''}`}>
+                  <div className={`flex justify-between items-center`}>
                     <span className="text-gray-700">GST (18%)</span>
                     <span className="font-semibold">₹ {gst.toFixed(2)}</span>
                   </div>

@@ -1,10 +1,11 @@
 import React from "react";
 import { Check } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { masterclass } from "../data";
+import { masterclassConfig } from "../data";
 
 export const OfferDetails: React.FC = () => {
   const navigate = useNavigate();
+  const masterclass = masterclassConfig();
 
   return (
     <div className="mt-24 bg-gradient-to-b from-gray-50 to-white py-16">
@@ -29,7 +30,7 @@ export const OfferDetails: React.FC = () => {
 
               <div className="flex items-center justify-center gap-4 mb-8">
                 <span className="text-5xl md:text-6xl font-bold text-gray-900">
-                  ₹{masterclass?.price}
+                  ₹{masterclass[1]?.price}
                 </span>
                 <span className="text-2xl text-gray-400 line-through">
                   ₹999
@@ -46,7 +47,7 @@ export const OfferDetails: React.FC = () => {
                 <div className="flex items-start gap-3">
                   <Check className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
                   <p className="text-left text-gray-600">
-                    Enjoy the discounted price of ₹{masterclass?.price} and save a total of 50%.
+                    Enjoy the discounted price of ₹{masterclass[1]?.price} and save a total of 50%.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">

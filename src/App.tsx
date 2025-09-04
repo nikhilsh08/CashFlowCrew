@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+// App.tsx
+import React, { useEffect, createContext, useContext } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import TagManager from "react-gtm-module";
-// import ReactPixel from "react-facebook-pixel";
 import {
   Header,
   EventDetails,
@@ -27,8 +27,31 @@ import {
 import MasterClass from "./pages/MasterClass";
 import Status from "./pages/Status";
 import { ToastContainer } from "react-toastify";
+import { useMasterclass } from "./hooks/useMasterclass";
 
-// Home Page
+// ---------------- Context Setup ----------------
+type MasterclassContextType = ReturnType<typeof useMasterclass>;
+
+const MasterclassContext = createContext<MasterclassContextType | null>(null);
+
+export const useMasterclassContext = () => {
+  const ctx = useContext(MasterclassContext);
+  if (!ctx) {
+    throw new Error("useMasterclassContext must be used inside <MasterclassProvider>");
+  }
+  return ctx;
+};
+
+const MasterclassProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const masterclassState = useMasterclass();
+  return (
+    <MasterclassContext.Provider value={masterclassState}>
+      {children}
+    </MasterclassContext.Provider>
+  );
+};
+// ------------------------------------------------
+
 const HomePage: React.FC = () => (
   <>
     <div className="flex-1 bg-gradient-to-b from-gray-50 to-white">
@@ -57,25 +80,24 @@ const HomePage: React.FC = () => (
   </>
 );
 
+
 // Hook to track page views for both GTM & Pixel
-const usePageTracking = () => {
-  const location = useLocation();
-  useEffect(() => {
-    // Google Tag Manager Page View Event
-    TagManager.dataLayer({
-      dataLayer: {
-        event: "pageview",
-        page: location.pathname,
-      },
-    });
-
-    // Facebook Pixel Page View
-    // ReactPixel.pageView();
-  }, [location]);
-};
-
 const AppContent: React.FC = () => {
-  usePageTracking();
+  const location = useLocation();
+  const { masterclass, loading, error } = useMasterclassContext();
+  // console.log("Masterclass data in AppContent:", masterclass);
+
+  useEffect(() => {
+    TagManager.dataLayer({
+      dataLayer: { event: "pageview", page: location.pathname },
+    });
+  }, [location]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error loading masterclass</p>;
+
+  const bootcamp = masterclass?.[0];
+  const workshop = masterclass?.[1];
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -88,28 +110,34 @@ const AppContent: React.FC = () => {
         <Route path="/delivery-policy" element={<DeliveryPolicy />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/payment/status/:id" element={<Status />} />
-        <Route path="/master-class/register" element={<MasterClass />} />
-        <Route path="/finance-bootcamp/register" element={<MasterClass />} />
+        <Route
+          path="/master-class/register"
+          element={workshop ? <MasterClass masterclass={workshop} /> : <p>Loading...</p>}
+        />
+        <Route
+          path="/finance-bootcamp/register"
+          element={bootcamp ? <MasterClass masterclass={bootcamp} /> : <p>Loading...</p>}
+        />
       </Routes>
     </div>
   );
 };
 
+
 const App: React.FC = () => {
   useEffect(() => {
-    // ✅ Initialize GTM
     TagManager.initialize({ gtmId: "GTM-XXXXXXX" }); // replace with your GTM ID
-
-    // ✅ Initialize Facebook Pixel
-    // ReactPixel.init("123456789012345"); // replace with your Pixel ID
-    // ReactPixel.pageView();
   }, []);
 
   return (
     <Router>
-      <AppContent />
+      <MasterclassProvider>
+        <AppContent />
+      </MasterclassProvider>
     </Router>
   );
 };
 
 export default App;
+
+
