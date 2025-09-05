@@ -77,24 +77,37 @@ const MasterClass = ({ masterclass }: { masterclass: Masterclass | null }) => {
       phoneRegex.test(phone) || "Enter a valid 10-digit Indian mobile number"
     );
   };
-  const handleApplyCoupon = async () =>{
+  const handleApplyCoupon = async () => {
     const couponCode = watch("coupon")?.toLowerCase();
     // console.log("masterclass", masterclass);
     try {
-      const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/v1/users/apply-coupon`, { code: couponCode,masterClassId: masterclass?._id });
+      const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/v1/users/apply-coupon`, { code: couponCode, masterClassId: masterclass?._id });
       // console.log("apply coupon res", res.data);
 
-      if(res.data.success){
+      if (res.data.success) {
         setCouponApplied(true);
-        toast.success("Coupon applied! ₹"+res.data.discountedAmount+" discount added.");
+        toast.success("Coupon applied! ₹" + res.data.discountedAmount + " discount added.");
         setCouponPrice(res.data.discountedAmount);
+        if (res.data.success) {
+          setCouponApplied(true);
+          toast.success("Coupon applied! ₹" + res.data.discountedAmount + " discount added.");
+          setCouponPrice(res.data.discountedAmount);
+
+          // 🔹 Fire event
+          window.fbq?.("trackCustom", "CouponApplied", { code: couponCode });
+          window.gtag?.("event", "add_payment_info", {
+            coupon: couponCode,
+            currency: "INR",
+          });
+        }
+
       }
 
 
-    } catch (error:any) {
+    } catch (error: any) {
       toast.error(error?.response?.data?.message || "Error applying coupon");
       // console.error("Error applying coupon", error);
-      
+
     }
   }
 
@@ -108,7 +121,7 @@ const MasterClass = ({ masterclass }: { masterclass: Masterclass | null }) => {
   }, [couponApplied, couponPrice]);
 
 
-// console.log("masterclass discounted price", couponPrice);
+  // console.log("masterclass discounted price", couponPrice);
 
   // get local storage data and use react hook form and prefiled with it
   let storedData
@@ -121,6 +134,18 @@ const MasterClass = ({ masterclass }: { masterclass: Masterclass | null }) => {
   }, [reset]);
 
   const onSubmit = async (data: FormData) => {
+    if (typeof window !== "undefined") {
+      window.fbq?.("track", "InitiateCheckout", {
+        value: finalPrice,
+        currency: "INR",
+        content_name: masterclass?.title || "Masterclass",
+      });
+      window.gtag?.("event", "begin_checkout", {
+        currency: "INR",
+        value: finalPrice,
+        items: [{ id: masterclass?._id, name: masterclass?.title }],
+      });
+    }
     localStorage.setItem("masterclass_registration", JSON.stringify(data));
     data.amount = finalPrice;
     setPaymentStatus(null);
@@ -484,7 +509,7 @@ const MasterClass = ({ masterclass }: { masterclass: Masterclass | null }) => {
                   <h3 className="text-xl font-bold text-gray-900 mb-2">
                     {masterclass?.title}
                   </h3>
-                  <p className="text-gray-600 mb-6">{formatdate(masterclass?.date ?? "")} | { masterclass?.start_time} PM</p>
+                  <p className="text-gray-600 mb-6">{formatdate(masterclass?.date ?? "")} | {masterclass?.start_time} PM</p>
                   <div className="space-y-2 mb-6">
                     <div className="flex items-center space-x-3">
                       <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
