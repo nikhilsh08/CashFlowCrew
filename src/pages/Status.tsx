@@ -20,14 +20,15 @@ const Status = () => {
   const { id } = useParams();
   const [paymentStatus, setPaymentStatus] = useState<PhonePePaymentStatusResponse | null>(null);
   const [conversionFired, setConversionFired] = useState(false);
+  const [redirectCountdown, setRedirectCountdown] = useState(5); // 5 second countdown
 
   // Helper function to get cookie
-  const getCookie = (name: string): string | null => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop()?.split(';').shift() || null;
-    return null;
-  };
+  // const getCookie = (name: string): string | null => {
+  //   const value = `; ${document.cookie}`;
+  //   const parts = value.split(`; ${name}=`);
+  //   if (parts.length === 2) return parts.pop()?.split(';').shift() || null;
+  //   return null;
+  // };
 
   // Fire Facebook Purchase event
   const fireFacebookPurchaseEvent = (paymentData: any) => {
@@ -47,12 +48,6 @@ const Status = () => {
         eventID: transactionId // For deduplication
       });
       
-      // console.log('Facebook Purchase event fired:', {
-      //   value: amount,
-      //   currency: 'INR',
-      //   transaction_id: transactionId
-      // });
-      
       setConversionFired(true);
     }
   };
@@ -71,7 +66,7 @@ const Status = () => {
         fireFacebookPurchaseEvent(response.data);
         
         // Update user record
-        const update = await axios.put(
+           await axios.put(
           `${import.meta.env.VITE_SERVER_URL}/api/v1/users/update/${id}`,
           { paymentStatus: response.data, transaction: response.data.success, Value: response.data.data.amount,
             Currency: "INR"
@@ -84,13 +79,26 @@ const Status = () => {
     }
   };
 
+  // Auto redirect effect for successful payments
+  useEffect(() => {
+    if (paymentStatus?.status === "COMPLETED" && redirectCountdown > 0) {
+      const timer = setTimeout(() => {
+        setRedirectCountdown(prev => prev - 1);
+      }, 1000);
+      
+      return () => clearTimeout(timer);
+    } else if (paymentStatus?.status === "COMPLETED" && redirectCountdown === 0) {
+      // Redirect to meeting link
+      window.open(masterclass.meeting_link, '_blank');
+    }
+  }, [paymentStatus?.status, redirectCountdown, masterclass.meeting_link]);
+
   useEffect(() => {
     if (id && !conversionFired) {
       checkPaymentStatus();
     }
   }, [id]);
 
-  // Rest of your existing code remains the same...
   const renderContent = () => {
     if (!paymentStatus) {
       return (
@@ -111,6 +119,20 @@ const Status = () => {
             <p className="text-lg text-gray-800 mb-6 text-center drop-shadow-sm">
               Your enrollment was successful. We are excited to have you on board!
             </p>
+            
+            {/* Countdown display */}
+            <div className="text-center mb-6">
+              <p className="text-md text-gray-600 mb-2">
+                Redirecting to webinar in {redirectCountdown} seconds...
+              </p>
+              <div className="w-full bg-gray-200 rounded-full h-2">
+                <div 
+                  className="bg-blue-600 h-2 rounded-full transition-all duration-1000"
+                  style={{ width: `${((5 - redirectCountdown) / 5) * 100}%` }}
+                ></div>
+              </div>
+            </div>
+
             <div className="flex justify-center mt-6 items-center gap-x-4">
               <a
                 className="px-6 py-2 bg-gradient-to-r from-indigo-600 to-blue-500 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all"
@@ -118,7 +140,7 @@ const Status = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Get Webinar Link
+                Get Webinar Link Now
               </a>
             </div>
           </>
