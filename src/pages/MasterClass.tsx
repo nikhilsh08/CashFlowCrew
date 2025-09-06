@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useLocation } from 'react-router-dom';
 import type { Masterclass } from "../types";
-import { formatdate } from "../lib/utils";
+import { formatdate, formatTime } from "../lib/utils";
 interface FormData {
   firstName: string;
   lastName: string;
@@ -247,6 +247,14 @@ const MasterClass = ({ masterclass }: { masterclass: Masterclass | null }) => {
   //     </div>
   //   );
   // }
+  const duration = parseInt(masterclass?.duration ?? "1");
+  const startDate = masterclass?.date ? new Date(masterclass.date) : new Date(); // MongoDB ISO date or fallback
+  const endDate = new Date(startDate);
+
+  if (duration > 1) {
+    endDate.setDate(startDate.getDate() + (duration - 1));
+  }
+
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -509,13 +517,42 @@ const MasterClass = ({ masterclass }: { masterclass: Masterclass | null }) => {
                   <h3 className="text-xl font-bold text-gray-900 mb-2">
                     {masterclass?.title}
                   </h3>
-                  <p className="text-gray-600 mb-6">{formatdate(masterclass?.date ?? "")} | {masterclass?.start_time} PM</p>
+                  <div className="mb-4" >
+                    <div className="space-y-2">
+                      <div className="flex items-start gap-x-3 gap-y-2">
+                        <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <Calendar className="w-4 h-4 text-blue-600" />
+                        </div>
+                        <div className="flex-1 min-w-0 -mt-0.5">
+                          <p className="text-xs font-light text-gray-500 mt-[-1px] ">Date</p>
+                          <p className="text-gray-900 font-normal text-sm leading-relaxed">
+                            {duration === 1
+                              ? formatdate(startDate)
+                              : `${formatdate(startDate)} – ${formatdate(endDate)}`}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start gap-x-3 gap-y-2 ">
+                        <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <Clock className="w-4 h-4 text-green-600" />
+                        </div>
+                        <div className="flex-1 min-w-0 -mt-0.5">
+                          <p className="text-xs font-light text-gray-500 mb-1">Time</p>
+                          <p className="text-gray-900 font-normal text-sm  mt-[-4px]">
+                            {formatTime(masterclass?.start_time)} – {formatTime(masterclass?.end_time)} (IST)
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                   <div className="space-y-2 mb-6">
                     <div className="flex items-center space-x-3">
                       <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
                         <Clock className="w-4 h-4 text-blue-600" />
                       </div>
-                      <span className="text-gray-700">{"1"} Day Duration</span>
+                      <span className="text-gray-700">{masterclass?.duration} Duration</span>
                     </div>
                     <div className="flex items-center space-x-3">
                       <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
