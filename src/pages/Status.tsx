@@ -110,7 +110,8 @@ const Status = () => {
       return () => clearTimeout(timer);
     } else if (paymentStatus?.status === "COMPLETED" && redirectCountdown === 0) {
       // Redirect to meeting link
-      window.open(masterclass.meeting_link, "_blank");
+      if(paymentStatus?.data?.amount/100 >= masterclass.price) return; // don't redirect if full payment
+      window.location.href = masterclass.meeting_link;
     }
   }, [paymentStatus?.status, redirectCountdown, masterclass.meeting_link]);
 
@@ -128,11 +129,35 @@ const Status = () => {
         </div>
       );
     }
+    console.log(paymentStatus?.data?.amount);
 
     switch (paymentStatus.status) {
       case "COMPLETED":
         return (
           <>
+          {
+            (paymentStatus?.data?.amount/100) >= masterclass.price ? (
+              <>
+            <h1 className="text-4xl font-bold text-gray-900 mb-4 drop-shadow-md text-center flex items-center justify-center gap-2">
+              <CheckCircle className="text-green-500 w-8 h-8" />
+              Thank You for Enrolling!
+            </h1>
+            <p className="text-lg text-gray-800 mb-6 text-center drop-shadow-sm">
+              Your enrollment was successful. We are excited to have you on board!
+            </p>
+
+            {/* Countdown display */}
+
+            <div className="flex justify-center mt-6 items-center gap-x-4">
+              <p
+                className="px-6 py-2 bg-gradient-to-r from-indigo-600 to-blue-500 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all"
+              >
+                We'll share you the webinar link via email shortly.
+              </p>
+            </div>
+          </>
+            ) : (
+              <>
             <h1 className="text-4xl font-bold text-gray-900 mb-4 drop-shadow-md text-center flex items-center justify-center gap-2">
               <CheckCircle className="text-green-500 w-8 h-8" />
               Thank You for Enrolling!
@@ -165,6 +190,10 @@ const Status = () => {
               </a>
             </div>
           </>
+            )
+          }
+          </>
+         
         );
 
       case "PENDING":
