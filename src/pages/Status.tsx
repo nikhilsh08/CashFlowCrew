@@ -110,7 +110,7 @@ const Status = () => {
       return () => clearTimeout(timer);
     } else if (paymentStatus?.status === "COMPLETED" && redirectCountdown === 0) {
       // Redirect to meeting link
-      if(paymentStatus?.data?.amount/100 >= masterclass.price) return; // don't redirect if full payment
+      if(paymentStatus?.data?.amount/100 >= 999) return; // don't redirect if full payment
       window.location.href = masterclass.meeting_link;
     }
   }, [paymentStatus?.status, redirectCountdown, masterclass.meeting_link]);
@@ -129,14 +129,18 @@ const Status = () => {
         </div>
       );
     }
-    console.log(paymentStatus?.data?.amount);
+
+    console.log("masterclass pricee",masterclass.price);
+    console.log("paymentStatus?.data?.amount/100",paymentStatus?.data?.amount/100);
+
+    console.log("paymentStatus",paymentStatus?.data?.amount/100 > masterclass.price);
 
     switch (paymentStatus.status) {
       case "COMPLETED":
         return (
           <>
           {
-            (paymentStatus?.data?.amount/100) >= masterclass.price ? (
+            paymentStatus?.data?.amount/100 > 999 ? (
               <>
             <h1 className="text-4xl font-bold text-gray-900 mb-4 drop-shadow-md text-center flex items-center justify-center gap-2">
               <CheckCircle className="text-green-500 w-8 h-8" />
