@@ -24,11 +24,12 @@ import {
   DeliveryPolicy,
   ContactUs,
 } from "./pages";
+
 import MasterClass from "./pages/MasterClass";
 import Status from "./pages/Status";
 import { ToastContainer } from "react-toastify";
 import { useMasterclass } from "./hooks/useMasterclass";
-
+import MovingLoader from "./components/Loader";  
 // ---------------- Context Setup ----------------
 type MasterclassContextType = ReturnType<typeof useMasterclass>;
 
@@ -93,7 +94,7 @@ const AppContent: React.FC = () => {
     });
   }, [location]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <MovingLoader size={240} animationType="bounce" speed={1.2} className="mt-20" />;
   if (error) return <p>Error loading masterclass</p>;
 
   const bootcamp = masterclass?.[0];

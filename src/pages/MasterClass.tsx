@@ -168,16 +168,16 @@ const MasterClass = ({ masterclass }: { masterclass: Masterclass | null }) => {
     }
   };
 
-  const applyCoupon = () => {
-    const couponCode = watch("coupon")?.toLowerCase();
-    if (couponCode === "save20") {
-      setCouponApplied(true);
-      alert("Coupon applied! 20% discount added.");
-    } else {
-      setCouponApplied(false);
-      alert("Invalid coupon code");
-    }
-  };
+  // const applyCoupon = () => {
+  //   const couponCode = watch("coupon")?.toLowerCase();
+  //   if (couponCode === "save20") {
+  //     setCouponApplied(true);
+  //     alert("Coupon applied! 20% discount added.");
+  //   } else {
+  //     setCouponApplied(false);
+  //     alert("Invalid coupon code");
+  //   }
+  // };
 
   // Open payment page only when token changes
   useEffect(() => {
