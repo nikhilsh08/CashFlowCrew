@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import type { PhonePePaymentStatusResponse } from "../types";
 import { CheckCircle, Clock, XCircle } from "lucide-react";
 import { masterclassConfig } from "../data";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import MovingLoader from "../components/Loader";
 import { getFbcFromCookie,getFbcFromUrl,getFbpFromCookie } from "../lib/utils";
 
@@ -23,6 +23,7 @@ const Status = () => {
   const { id } = useParams();
   const [paymentStatus, setPaymentStatus] = useState<PhonePePaymentStatusResponse | null>(null);
   const [conversionFired, setConversionFired] = useState(false);
+  const [shouldWarnBeforeLeave, setShouldWarnBeforeLeave] = useState(false);
   const [redirectCountdown, setRedirectCountdown] = useState(5); // 5 second countdown
   const fbc = getFbcFromCookie() || getFbcFromUrl();
   const fbp = getFbpFromCookie(); // similar function for _fbp
@@ -115,7 +116,7 @@ const Status = () => {
       }
     } catch (error) {
       console.error("Error checking payment status:", error);
-      toast.error("Error checking payment status");
+      // toast.error("Error checking payment status");
     }
   };
 
@@ -133,17 +134,53 @@ const Status = () => {
       window.location.href = masterclass.meeting_link;
     }
   }, [paymentStatus?.status, redirectCountdown, masterclass.meeting_link]);
+  
+  useEffect(() => {
+  if (paymentStatus) {
+    // Warn if payment is pending OR if payment completed but still redirecting
+    const shouldWarn = paymentStatus.status === "PENDING" || 
+                      (paymentStatus.status === "COMPLETED" && 
+                       paymentStatus?.data?.amount / 100 < 999 && 
+                       redirectCountdown > 0);
+    setShouldWarnBeforeLeave(shouldWarn);
+  } else {
+    // Also warn while checking payment status (loading state)
+    setShouldWarnBeforeLeave(true);
+  }
+}, [paymentStatus, redirectCountdown]);
+useEffect(() => {
+  const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+    // Only show warning if shouldWarnBeforeLeave is true
+    if (shouldWarnBeforeLeave) {
+      const message = "Your payment is being processed. Are you sure you want to leave?";
+      e.preventDefault();
+      e.returnValue = message;
+      return message;
+    }
+    // If shouldWarnBeforeLeave is false, no warning is shown
+  };
+
+  // Only add event listener if we should warn
+  if (shouldWarnBeforeLeave) {
+    window.addEventListener('beforeunload', handleBeforeUnload);
+  }
+
+  return () => {
+    window.removeEventListener('beforeunload', handleBeforeUnload);
+  };
+}, [shouldWarnBeforeLeave]);
 
   useEffect(() => {
     if (id && !conversionFired) {
       checkPaymentStatus();
     }
   }, [id]);
+ 
 
   const renderContent = () => {
     if (!paymentStatus) {
       return (
-        <MovingLoader size={240} animationType="bounce" speed={1.2} text="please wait for the payment confirmation..." />
+        <MovingLoader size={240} animationType="bounce" speed={1.2} className="!bg-none !border-none" text="please wait for the payment confirmation..." />
       );
     }
     // Warn user before closing tab if payment completed but not redirected
