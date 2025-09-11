@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { ArrowLeft, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export const RefundPolicy: React.FC = () => {
+const RefundPolicy: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -117,3 +117,4 @@ export const RefundPolicy: React.FC = () => {
     </div>
   );
 };
+export default RefundPolicy;

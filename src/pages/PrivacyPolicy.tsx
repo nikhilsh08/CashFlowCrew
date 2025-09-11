@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export const PrivacyPolicy: React.FC = () => {
+const PrivacyPolicy: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -350,3 +350,5 @@ export const PrivacyPolicy: React.FC = () => {
     </div>
   );
 };
+
+export default PrivacyPolicy;

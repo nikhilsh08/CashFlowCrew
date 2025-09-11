@@ -7,11 +7,11 @@ import {
   Video,
   FileCheck,
   Phone,
-  HelpCircle,
+  
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export const DeliveryPolicy: React.FC = () => {
+const DeliveryPolicy: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -246,3 +246,5 @@ export const DeliveryPolicy: React.FC = () => {
     </div>
   );
 };
+
+export default DeliveryPolicy;
