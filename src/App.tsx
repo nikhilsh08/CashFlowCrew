@@ -94,7 +94,7 @@ const AppContent: React.FC = () => {
     });
   }, [location]);
 
-  if (loading) return <MovingLoader size={240} animationType="bounce" speed={1.2} className="mt-20" />;
+  if (loading) return <MovingLoader size={240} animationType="bounce" speed={1.8} className="mt-20" text="Loading..." />;
   if (error) return <p>Error loading masterclass</p>;
 
   const bootcamp = masterclass?.[0];
