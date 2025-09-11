@@ -6,7 +6,7 @@ import type { PhonePePaymentStatusResponse } from "../types";
 import { CheckCircle, Clock, XCircle } from "lucide-react";
 import { masterclassConfig } from "../data";
 import { toast } from "react-toastify";
-const MovingLoader = (await import("../components/Loader")).default;
+import MovingLoader from "../components/Loader";
 import { getFbcFromCookie,getFbcFromUrl,getFbpFromCookie } from "../lib/utils";
 
 // Declare fbq and gtag for TypeScript
@@ -86,7 +86,7 @@ const Status = () => {
   const checkPaymentStatus = async () => {
     try {
       const response = await axios.post(
-      `${import.meta.env.VITE_SERVER_URL}/api/v1/payments/status/`,
+      `${import.meta.env.VITE_SERVER_URL}/api/v1/payments/status`,
       { orderId: id, fbp, fbc }, // request body
       {
         headers: {
