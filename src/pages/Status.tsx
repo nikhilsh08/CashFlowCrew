@@ -6,7 +6,8 @@ import type { PhonePePaymentStatusResponse } from "../types";
 import { CheckCircle, Clock, XCircle } from "lucide-react";
 import { masterclassConfig } from "../data";
 import { toast } from "react-toastify";
-import MovingLoader from "../components/Loader";
+const MovingLoader = (await import("../components/Loader")).default;
+import { getFbcFromCookie,getFbcFromUrl,getFbpFromCookie } from "../lib/utils";
 
 // Declare fbq and gtag for TypeScript
 declare global {
@@ -23,6 +24,15 @@ const Status = () => {
   const [paymentStatus, setPaymentStatus] = useState<PhonePePaymentStatusResponse | null>(null);
   const [conversionFired, setConversionFired] = useState(false);
   const [redirectCountdown, setRedirectCountdown] = useState(5); // 5 second countdown
+  const fbc = getFbcFromCookie() || getFbcFromUrl();
+  const fbp = getFbpFromCookie(); // similar function for _fbp
+
+//   console.log("fbc", fbc);
+//   console.log("fbp", fbp);
+//   useEffect(() => {
+//   console.log("All cookies:", document.cookie);
+// }, []);
+
 
   // 🔥 Fire Facebook + GA4 purchase events
   const firePurchaseEvents = (paymentData: any) => {
@@ -31,7 +41,7 @@ const Status = () => {
     // console.log("Firing conversion events...", paymentData);
     const rawAmount = paymentData.data?.amount || 999;
     const amount = rawAmount / 100; // PhonePe returns paise, convert to INR
-    const transactionId = paymentData.data?.transactionId || id;
+    const transactionId =  id;
 
     // --- Facebook Pixel Purchase ---
     if (typeof window !== "undefined" && window.fbq) {
@@ -75,9 +85,16 @@ const Status = () => {
   // ✅ Check payment status from backend
   const checkPaymentStatus = async () => {
     try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}/api/v1/payments/status/${id}`
-      );
+      const response = await axios.post(
+      `${import.meta.env.VITE_SERVER_URL}/api/v1/payments/status/`,
+      { orderId: id, fbp, fbc }, // request body
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "User-Agent": navigator.userAgent, // forward actual browser UA
+        },
+      }
+    );
 
       setPaymentStatus(response.data);
 
