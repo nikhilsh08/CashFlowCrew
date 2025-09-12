@@ -111,6 +111,7 @@ const Status = () => {
             transaction: response.data.success,
             Value: response.data.data.amount,
             Currency: "INR",
+            transactionStatus: response.data.status,
           }
         );
       }
