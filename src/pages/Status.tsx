@@ -104,17 +104,17 @@ const Status = () => {
         firePurchaseEvents(response.data);
 
         // Update user record in backend
-        await axios.put(
-          `${import.meta.env.VITE_SERVER_URL}/api/v1/users/update/${id}`,
-          {
-            paymentStatus: response.data,
-            transaction: response.data.success,
-            Value: response.data.data.amount,
-            Currency: "INR",
-            transactionStatus: response.data.status,
-          }
-        );
       }
+      await axios.put(
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/users/update/${id}`,
+        {
+          paymentStatus: response.data,
+          transaction: response.data.success,
+          Value: response.data.data.amount,
+          Currency: "INR",
+          transactionStatus: response.data.status,
+        }
+      );
     } catch (error) {
       console.error("Error checking payment status:", error);
       // toast.error("Error checking payment status");
