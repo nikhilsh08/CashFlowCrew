@@ -58,7 +58,7 @@ export const today = new Date().toLocaleDateString('en-US', {
 
 // components/EventConfig.tsx or inside your event-related file
 import { useMasterclassContext } from '../App';
-import { formatdate } from '../lib/utils';
+import { formatdate, formatTime } from '../lib/utils';
 
 export const EventDetailsConfig = () => {
   const { masterclass } = useMasterclassContext();
@@ -69,7 +69,7 @@ export const EventDetailsConfig = () => {
     { icon: Calendar, text: formatdate(masterclass[1]?.date) },
     {
       icon: Clock,
-      text: `${masterclass[1]?.start_time} PM - ${masterclass[1]?.end_time} PM IST`,
+      text: `${formatTime(masterclass[1]?.start_time)} - ${formatTime(masterclass[1]?.end_time)} IST`,
     },
   ];
 };
