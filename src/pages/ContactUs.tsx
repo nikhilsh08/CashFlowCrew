@@ -74,13 +74,13 @@ const ContactUs: React.FC = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex items-start gap-4">
+              {/* <div className="flex items-start gap-4">
                 <Phone className="w-6 h-6 text-indigo-600 mt-1" />
                 <div>
-                  {/* <h3 className="font-semibold text-gray-900">Phone</h3>
-                  <p className="text-gray-600">+91-9902366044</p> */}
+                  <h3 className="font-semibold text-gray-900">Phone</h3>
+                  <p className="text-gray-600">+91-9902366044</p>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 
