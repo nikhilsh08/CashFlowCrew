@@ -33,6 +33,10 @@ export const FAQ: React.FC = () => {
       question: "Is this a live webinar or pre-recorded?",
       answer: `This is a live interactive webinar scheduled for ${formatdate(masterclass[1].date)}, from ${masterclass[1].start_time} PM to ${masterclass[1].end_time} PM IST. You'll be able to ask questions in real-time and interact with the instructor and other participants.`,
     },
+    {
+      question: "What if I miss the webinar due to an emergency?",
+      answer: "In case you miss the webinar due to an emergency, please write to us at support@cashflowcrew.in and our team will assist you further.",
+    },
     // {
     //   question: "What if I can't attend the live webinar session?",
     //   answer: "Don't worry! All registered participants get access to the complete webinar recording within 24 hours of the live session. You can watch it at your convenience and still access all the bonus materials.",
@@ -64,7 +68,7 @@ export const FAQ: React.FC = () => {
       <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">
         Frequently Asked Questions
       </h2>
-      
+
       <div className="space-y-4">
         {faqs.map((faq, index) => (
           <div
@@ -86,13 +90,12 @@ export const FAQ: React.FC = () => {
                 )}
               </div>
             </button>
-            
+
             <div
-              className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                openIndex === index
+              className={`overflow-hidden transition-all duration-300 ease-in-out ${openIndex === index
                   ? "max-h-96 opacity-100"
                   : "max-h-0 opacity-0"
-              }`}
+                }`}
             >
               <div className="px-6 py-4 bg-gray-50 border-t border-gray-100">
                 <p className="text-gray-700 leading-relaxed animate-fade-in">
