@@ -18,9 +18,10 @@ import {
   BarChart2,
   BookOpen,
   PenTool as Tool,
-  Bot
+  
+  Link
 } from 'lucide-react';
-import { Testimonial, EventDetail, Experience, TimelineItem, Bonus } from '../types';
+import { Testimonial,  Experience, TimelineItem, Bonus } from '../types';
 
 export const today = new Date().toLocaleDateString('en-US', {
   day: 'numeric',
@@ -225,11 +226,12 @@ export const bonuses: Bonus[] = [
     worth: 1000
   },
   {
-    icon: Bot,
-    title: "ChatGPT Prompts for Analyzing Fund Performances",
-    description: "Leverage AI-powered prompts to evaluate mutual fund performance and refine your investment decisions.",
-    worth: 1500
-  }
+  icon: Link,
+  title: "Get a List of All Websites Discussed in Class",
+  description: "Access a curated list of all the websites covered during live sessions — each packed with resources to help you kickstart and refine your portfolio analysis.",
+  worth: 1500
+}
+
 ];
 
 
