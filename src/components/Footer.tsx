@@ -120,7 +120,7 @@ export const Footer: React.FC = () => {
             <h3 className="text-gray-900 font-semibold mb-4">Contact Us</h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
-                <Mail className="w-5 h-5 text-indigo-600 mt-0.5" />
+                {/* <Mail className="w-5 h-5 text-indigo-600 mt-0.5" /> */}
                 <a
                   href="mailto:support@cashflowcrew.com"
                   className="text-gray-600 hover:text-indigo-600 transition-colors"
@@ -129,14 +129,16 @@ export const Footer: React.FC = () => {
                 </a>
               </li>
 
-              <li className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-indigo-600 mt-0.5" />
+              <li className="flex items-start text-sm gap-3">
+                {/* <MapPin className="w-5 h-5 text-indigo-600 mt-0.5" /> */}
                 <address className="text-gray-600 not-italic">
-                  CashFlowCrew Private Limited
+                  <p className=" font-semibold">Collabroot Marketing Private Limited</p>
                   <br />
-                  42, Innovation Hub, Cyber City
+                  3rd Floor, Vision Comptech Integrators Limited, Time Square, 106
                   <br />
-                  Gurugram, Haryana 122002
+                  Sushant Lok Phase 1, B-Block
+                  <br />
+                  Gurugram, Haryana, 122009
                 </address>
               </li>
             </ul>
@@ -147,8 +149,7 @@ export const Footer: React.FC = () => {
         <div className="border-t border-gray-200 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-600 text-sm text-center md:text-left">
-              © {currentYear} CashFlowCrew. All rights reserved. | CIN:
-              U74999HR2023PTC123456
+              © {currentYear} CashFlowCrew. All rights reserved. 
             </p>
             <div className="flex items-center gap-4">
               <Link
@@ -164,3 +165,5 @@ export const Footer: React.FC = () => {
     </footer>
   );
 };
+// | CIN:
+              // U74999HR2023PTC123456

@@ -296,7 +296,7 @@ const PrivacyPolicy: React.FC = () => {
               </p>
               <p>
                 We use services of third-party service providers such as Stripe,
-                PayPal, PayU, Cashfree, PayTM, Razorpay etc. for our products
+                PayPal, PayU, Cashfree, PayTM, Razorpay, Phonepe, EaseBuzz etc. for our products
                 and services. At no time is your banking information passed to
                 the website from any of these third-party providers.
               </p>

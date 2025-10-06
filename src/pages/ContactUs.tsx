@@ -65,13 +65,15 @@ const ContactUs: React.FC = () => {
                 <MapPin className="w-6 h-6 text-indigo-600 mt-1" />
                 <div>
                   <h3 className="font-semibold text-gray-900">Address</h3>
-                  <p className="text-gray-600">
-                    7 Bright Street,
-                    <br />
-                    Flat 10AB,
-                    <br />
-                    Kolkata - 700019
-                  </p>
+                   <address className="text-gray-600 not-italic">
+                  <p className=" font-semibold">Collabroot Marketing Private Limited</p>
+                  <br />
+                  3rd Floor, Vision Comptech Integrators Limited, Time Square, 106
+                  <br />
+                  Sushant Lok Phase 1, B-Block
+                  <br />
+                  Gurugram, Haryana, 122009
+                </address>
                 </div>
               </div>
               {/* <div className="flex items-start gap-4">
