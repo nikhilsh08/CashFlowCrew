@@ -99,7 +99,7 @@ const MasterClass = ({ masterclass }: { masterclass: Masterclass | null }) => {
     const basePrice = masterclass?.price || 0;
     const gst = Math.round(basePrice * 0.18);
     const discount = couponApplied ? couponPrice : 0;
-    const finalPrice = 1;
+    const finalPrice = basePrice + gst - discount;
     return { basePrice, gst, discount, finalPrice };
   }, [couponApplied, couponPrice, masterclass?.price]);
 
