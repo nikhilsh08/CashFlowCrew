@@ -259,7 +259,7 @@ export const useZwitchPayment = () => {
     } catch (error: any) {
       setIsLoading(false);
       toast.error(error?.response?.data?.message || 'Failed to initiate Zwitch payment');
-      console.error('Zwitch payment error:', error);
+      // console.error('Zwitch payment error:', error);
     }
   };
 
@@ -301,7 +301,7 @@ export const useZwitchPayment = () => {
       },
       (response: any) => {
         // Success callback
-        console.log('Layer payment response:', response);
+        // console.log('Layer payment response:', response);
 
         if (response && response.payment_id) {
           // Send payment details to backend for verification
@@ -318,7 +318,7 @@ export const useZwitchPayment = () => {
         // Error callback
         setIsLoading(false);
         toast.error(error?.message || 'Payment failed');
-        console.error('Layer payment error:', error);
+        // console.error('Layer payment error:', error);
       }
     );
   };
@@ -329,7 +329,7 @@ export const useZwitchPayment = () => {
   ) => {
     try {
       // Call backend to verify and process payment
-      console.log('Verifying payment with ID:', paymentId, paymentData);
+      // console.log('Verifying payment with ID:', paymentId, paymentData);
       const response = await axios.post(
         `${import.meta.env.VITE_SERVER_URL}/api/v1/payments/verify-zw-v1`,
         {
@@ -340,7 +340,7 @@ export const useZwitchPayment = () => {
           hash: paymentData.hash,
         }
       );
-      console.log('Payment verification response..........:', response);
+      // console.log('Payment verification response..........:', response);
 
       setIsLoading(false);
 
@@ -355,7 +355,7 @@ export const useZwitchPayment = () => {
     } catch (error: any) {
       setIsLoading(false);
       toast.error(error?.response?.data?.message || 'Payment verification failed');
-      console.error('Payment verification error:', error);
+      // console.error('Payment verification error:', error);
     }
   };
 
