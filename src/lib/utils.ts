@@ -58,3 +58,40 @@ export function getFbcFromUrl() {
 }
 
 
+
+
+
+// utils/encryption.ts
+export async function encryptSabPaisaPayload(payload: any, authKey: string, ivKey: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const keyData = encoder.encode(authKey.padEnd(32, "0")).slice(0, 32);
+  const ivData = encoder.encode(ivKey.padEnd(16, "0")).slice(0, 16);
+
+  const key = await crypto.subtle.importKey(
+    "raw",
+    keyData,
+    { name: "AES-CBC" },
+    false,
+    ["encrypt"]
+  );
+
+  const data = encoder.encode(JSON.stringify(payload));
+
+  const encryptedBuffer = await crypto.subtle.encrypt(
+    { name: "AES-CBC", iv: ivData },
+    key,
+    data
+  );
+
+  const encryptedBytes = new Uint8Array(encryptedBuffer);
+  let binary = "";
+  encryptedBytes.forEach((b) => (binary += String.fromCharCode(b)));
+
+  // Standard Base64
+  let base64 = btoa(binary);
+
+  // Convert to URL-safe Base64
+  base64 = base64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+
+  return base64;
+}

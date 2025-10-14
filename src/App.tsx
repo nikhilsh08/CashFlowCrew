@@ -30,6 +30,7 @@ import {
 import { ToastContainer } from "react-toastify";
 import { useMasterclass } from "./hooks/useMasterclass";
 import MovingLoader from "./components/Loader";
+import MasterClassSP from "./pages/Masterclass/MasterClassSP";
 
 // ---------------- Context Setup ----------------
 type MasterclassContextType = ReturnType<typeof useMasterclass>;
@@ -141,7 +142,7 @@ const AppContent: React.FC = () => {
             path="/master-class/register"
             element={
               workshop ? (
-                <MasterClass masterclass={workshop} />
+                <MasterClassSP masterclass={workshop} />
               ) : (
                 <p>Loading...</p>
               )

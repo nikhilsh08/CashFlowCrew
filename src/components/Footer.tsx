@@ -1,5 +1,4 @@
 import React from "react";
-import { DollarSign, Mail, MapPin, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export const Footer: React.FC = () => {
