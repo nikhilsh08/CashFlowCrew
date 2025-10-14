@@ -36,7 +36,7 @@ export const PaymentProviderModal = ({ isOpen, onClose, onSelectProvider, finalP
       isActive: true,
       errorMessage: "",
     },
-    
+
   ];
 
   const handleProceed = () => {
@@ -48,7 +48,7 @@ export const PaymentProviderModal = ({ isOpen, onClose, onSelectProvider, finalP
 
   const handleProviderClick = (provider: typeof providers[0]) => {
     if (provider.isActive) {
-      setSelectedProvider(provider.id as "Phonepe" | "SabPaisa" | "Zwitch" );
+      setSelectedProvider(provider.id as "Phonepe" | "SabPaisa" | "Zwitch");
     }
   };
 
@@ -85,68 +85,50 @@ export const PaymentProviderModal = ({ isOpen, onClose, onSelectProvider, finalP
           </div>
 
           {/* Payment Providers */}
+          {/* Payment Providers */}
           <div className="space-y-3 mb-6">
-            {providers.map((provider) => (
-              <div key={provider.id} className="relative">
-                <button
-                  onClick={() => handleProviderClick(provider)}
-                  disabled={!provider.isActive}
-                  className={`w-full p-4 rounded-xl border-2 transition-all ${
-                    !provider.isActive
-                      ? "border-gray-200 bg-gray-50 opacity-60 cursor-not-allowed"
-                      : selectedProvider === provider.id
-                      ? "border-blue-500 bg-blue-50 shadow-md"
-                      : "border-gray-200 hover:border-blue-300 hover:shadow-sm"
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className={`w-12 h-12 bg-white rounded-lg flex items-center justify-center p-2 ${
-                        !provider.isActive ? "grayscale" : ""
-                      }`}>
-                        <img
-                          src={provider.logo}
-                          alt={provider.name}
-                          className="w-full h-full object-contain"
-                        />
+            {providers
+              .filter((provider) => provider.isActive) // ✅ Hide inactive providers
+              .map((provider) => (
+                <div key={provider.id} className="relative">
+                  <button
+                    onClick={() => handleProviderClick(provider)}
+                    className={`w-full p-4 rounded-xl border-2 transition-all ${selectedProvider === provider.id
+                        ? "border-blue-500 bg-blue-50 shadow-md"
+                        : "border-gray-200 hover:border-blue-300 hover:shadow-sm"
+                      }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center p-2">
+                          <img
+                            src={provider.logo}
+                            alt={provider.name}
+                            className="w-full h-full object-contain"
+                          />
+                        </div>
+                        <div className="text-left">
+                          <span className="font-semibold text-gray-900">{provider.name}</span>
+                        </div>
                       </div>
-                      <div className="text-left">
-                        <span className={`font-semibold block ${
-                          provider.isActive ? "text-gray-900" : "text-gray-500"
-                        }`}>
-                          {provider.name}
-                        </span>
-                        {!provider.isActive && provider.errorMessage && (
-                          <span className="text-xs text-red-500 flex items-center mt-1">
-                            <AlertCircle className="w-3 h-3 mr-1" />
-                            {provider.errorMessage}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                    {provider.isActive && (
+
+                      {/* Radio circle */}
                       <div
-                        className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
-                          selectedProvider === provider.id
+                        className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${selectedProvider === provider.id
                             ? "border-blue-500 bg-blue-500"
                             : "border-gray-300"
-                        }`}
+                          }`}
                       >
                         {selectedProvider === provider.id && (
                           <div className="w-3 h-3 bg-white rounded-full"></div>
                         )}
                       </div>
-                    )}
-                    {!provider.isActive && (
-                      <div className="px-3 py-1 bg-gray-200 rounded-full">
-                        <span className="text-xs font-medium text-gray-600">Disabled</span>
-                      </div>
-                    )}
-                  </div>
-                </button>
-              </div>
-            ))}
+                    </div>
+                  </button>
+                </div>
+              ))}
           </div>
+
 
           {/* Security Info */}
           <div className="mb-6 p-3 bg-green-50 border border-green-200 rounded-xl">
@@ -174,11 +156,10 @@ export const PaymentProviderModal = ({ isOpen, onClose, onSelectProvider, finalP
             <button
               onClick={handleProceed}
               disabled={!selectedProvider}
-              className={`flex-1 px-4 py-3 rounded-xl font-semibold transition-all ${
-                selectedProvider
+              className={`flex-1 px-4 py-3 rounded-xl font-semibold transition-all ${selectedProvider
                   ? "bg-gradient-to-r from-indigo-600 to-blue-500 text-white hover:from-blue-600 hover:to-indigo-600 shadow-lg hover:shadow-xl"
                   : "bg-gray-300 text-gray-500 cursor-not-allowed"
-              }`}
+                }`}
             >
               Proceed to Pay
             </button>
