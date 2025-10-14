@@ -26,8 +26,8 @@ export const PaymentProviderModal = ({ isOpen, onClose, onSelectProvider, finalP
       id: "SabPaisa",
       name: "SabPaisa",
       logo: sabpaisa,
-      isActive: false,
-      errorMessage: "Temporarily unavailable",
+      isActive: true,
+      errorMessage: "",
     },
     {
       id: "Zwitch",
