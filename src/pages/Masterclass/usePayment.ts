@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import type { Masterclass } from "../../types";
+import { masterclassConfig } from "../../data";
 
 interface FormData {
   firstName: string;
@@ -14,6 +15,8 @@ interface FormData {
   companyName?: string;
   amount: number;
 }
+
+const masterclassData = masterclassConfig();
 
 export const usePayment = (masterclass: Masterclass | null) => {
   const [couponApplied, setCouponApplied] = useState(false);
@@ -138,6 +141,11 @@ export const SabPaisaPaymentIntegration = async (data: FormData, setIsProcessing
         if (!spURL || !encData || !clientCode) {
           throw new Error("Incomplete form data from server");
         }
+      //   const selectedMasterclass = masterclassData?.reduce((prev, curr) => {
+      //   const currDiff = Math.abs((curr.price + (curr.price * 0.18)) - data.amount);
+      //   const prevDiff = Math.abs((prev.price + (prev.price * 0.18)) - data?.amount);
+      //   return currDiff < prevDiff ? curr : prev;
+      // });
   
         // ✅ Create and auto-submit form to SabPaisa
         const form = document.createElement("form");
@@ -160,6 +168,18 @@ export const SabPaisaPaymentIntegration = async (data: FormData, setIsProcessing
   
         document.body.appendChild(form);
         form.submit();
+        // if (typeof window !== "undefined") {
+    //   window.fbq?.("track", "InitiateCheckout", {
+    //     value: data.amount,
+    //     currency: "INR",
+    //     content_name: selectedMasterclass?.title || "Masterclass",
+    //   });
+    //   window.gtag?.("event", "begin_checkout", {
+    //     currency: "INR",
+    //     value: data.amount,
+    //     items: [{ id: selectedMasterclass?._id, name: selectedMasterclass?.title }],
+    //   });
+    // }
       } else {
         throw new Error("Invalid payment response");
       }
@@ -342,10 +362,31 @@ export const useZwitchPayment = () => {
       );
       // console.log('Payment verification response..........:', response);
 
+      // masterclass has two array filter the array and select the particular massterclass index based on price of masterclass which is closer to the amount paid by user so subtract with paymentdata.amount and which is minium that masterclass will be selected
+      const selectedMasterclass = masterclassData?.reduce((prev, curr) => {
+        const currDiff = Math.abs((curr.price + (curr.price * 0.18)) - parseInt(paymentData.amount));
+        const prevDiff = Math.abs((prev.price + (prev.price * 0.18)) - parseInt(paymentData.amount));
+        return currDiff < prevDiff ? curr : prev;
+      });
+
+      console.log('Selected Masterclass:', selectedMasterclass);
+
       setIsLoading(false);
 
       if (response.data.success) {
         toast.success('Payment successful!');
+        if (typeof window !== "undefined") {
+      window.fbq?.("track", "InitiateCheckout", {
+        value: paymentData.amount,
+        currency: "INR",
+        content_name: selectedMasterclass?.title || "Masterclass",
+      });
+      window.gtag?.("event", "begin_checkout", {
+        currency: "INR",
+        value: paymentData.amount,
+        items: [{ id: selectedMasterclass?._id, name: selectedMasterclass?.title }],
+      });
+    }
         // Redirect to success page or handle next steps
         window.location.href = `/payment/status/${paymentData.orderId}?status=success`;
       } else {
