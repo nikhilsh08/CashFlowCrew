@@ -72,9 +72,9 @@ const MasterClass = ({ masterclass }: { masterclass: Masterclass | null }) => {
   const handleApplyCoupon = async () => {
     const couponCode = watch("coupon")?.toLowerCase();
     try {
-      const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/v1/users/apply-coupon`, { 
-        code: couponCode, 
-        masterClassId: masterclass?._id 
+      const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/v1/users/apply-coupon`, {
+        code: couponCode,
+        masterClassId: masterclass?._id
       });
 
       if (res.data.success) {
@@ -115,14 +115,14 @@ const MasterClass = ({ masterclass }: { masterclass: Masterclass | null }) => {
   // Handle payment provider selection
   const handlePaymentProviderSelect = (provider: "Phonepe" | "SabPaisa" | "Zwitch") => {
     setPaymentProvider(provider);
-    
+
     if (pendingFormData) {
       processPayment(pendingFormData, provider);
     }
   };
 
   const processPayment = async (
-    data: FormData, 
+    data: FormData,
     paymentProvider: "Phonepe" | "SabPaisa" | "Zwitch"
   ) => {
     data.amount = finalPrice;
@@ -164,10 +164,16 @@ const MasterClass = ({ masterclass }: { masterclass: Masterclass | null }) => {
     }
 
     localStorage.setItem("masterclass_registration", JSON.stringify(data));
-    
-    // Store form data and open payment modal
-    setPendingFormData(data);
-    setIsPaymentModalOpen(true);
+
+    // Check if price is higher than 1000
+    if ((masterclass?.price || 0) > 1000) {
+      // Automatically use PhonePe without showing modal
+      processPayment(data, "Phonepe");
+    } else {
+      // Show payment provider modal for prices <= 1000
+      setPendingFormData(data);
+      setIsPaymentModalOpen(true);
+    }
   };
 
   useEffect(() => {
