@@ -16,7 +16,10 @@ interface FormData {
   amount: number;
 }
 
-const masterclassData = masterclassConfig();
+const masterclassData: Masterclass[] = setTimeout(() => {
+  return masterclassConfig;
+
+}, 1500) as unknown as Masterclass[];  
 
 export const usePayment = (masterclass: Masterclass | null) => {
   const [couponApplied, setCouponApplied] = useState(false);
