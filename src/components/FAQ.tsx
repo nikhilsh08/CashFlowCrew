@@ -13,10 +13,10 @@ export const FAQ: React.FC = () => {
       question: "Is this webinar suitable for complete beginners?",
       answer: "Absolutely! The webinar is designed to cater to all levels, from complete beginners to intermediate investors. We start with the basics and gradually move to more advanced concepts.",
     },
-    {
-      question: "Will I get lifetime access to the webinar material?",
-      answer: "Yes, once you enroll, you get lifetime access to all webinar materials, including any future updates and improvements we make to the content.",
-    },
+    // {
+    //   question: "Will I get lifetime access to the webinar material?",
+    //   answer: "Yes, once you enroll, you get lifetime access to all webinar materials, including any future updates and improvements we make to the content.",
+    // },
     {
       question: "How is this different from free content available online?",
       answer: "While free content is valuable, this webinar provides structured, comprehensive knowledge with practical insights from industry experience. You'll learn proven strategies and get exclusive tools that aren't available elsewhere.",
