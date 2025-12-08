@@ -11,6 +11,7 @@ import { formatdate, formatTime } from "../../lib/utils";
 import { phonePePaymentIntegration, SabPaisaPaymentIntegration } from "./usePayment";
 import { PaymentProviderModal } from "./PaymentProviderModal";
 import { useZwitchPayment } from "./usePayment";
+import { getActiveProviders, type PaymentProviderId} from "./PaymentProviderModal";
 
 interface FormData {
   firstName: string;
@@ -24,9 +25,6 @@ interface FormData {
   amount: number;
 }
 
-// Zwitch Payment Integration
-
-
 const MasterClass = ({ masterclass }: { masterclass: Masterclass | null }) => {
   const [showGSTFields, setShowGSTFields] = useState(false);
   const [couponApplied, setCouponApplied] = useState(false);
@@ -34,14 +32,13 @@ const MasterClass = ({ masterclass }: { masterclass: Masterclass | null }) => {
   const [paymentToken, setPaymentToken] = useState<string | null>(null);
   const [paymentStatus, setPaymentStatus] = useState<string | null>(null);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
-  const [paymentProvider, setPaymentProvider] = useState<"Phonepe" | "SabPaisa" | "Zwitch" | null>(null);
+  const [paymentProvider, setPaymentProvider] = useState<PaymentProviderId | null>(null);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [pendingFormData, setPendingFormData] = useState<FormData | null>(null);
   const location = useLocation();
 
   const isFinanceBootCamp = location.pathname.includes("finance-bootcamp");
   const { isLoading: zwitchLoading, initiateZwitchPayment } = useZwitchPayment();
-  console.warn(paymentProvider)
 
   const {
     register,
@@ -100,7 +97,6 @@ const MasterClass = ({ masterclass }: { masterclass: Masterclass | null }) => {
     const gst = Math.round(basePrice * 0.18);
     const discount = couponApplied ? couponPrice : 0;
     const finalPrice = basePrice + gst - discount;
-    // const finalPrice = 1;
     return { basePrice, gst, discount, finalPrice };
   }, [couponApplied, couponPrice, masterclass?.price]);
 
@@ -113,7 +109,7 @@ const MasterClass = ({ masterclass }: { masterclass: Masterclass | null }) => {
   }, [reset]);
 
   // Handle payment provider selection
-  const handlePaymentProviderSelect = (provider: "Phonepe" | "SabPaisa" | "Zwitch") => {
+  const handlePaymentProviderSelect = (provider: PaymentProviderId) => {
     setPaymentProvider(provider);
 
     if (pendingFormData) {
@@ -123,7 +119,7 @@ const MasterClass = ({ masterclass }: { masterclass: Masterclass | null }) => {
 
   const processPayment = async (
     data: FormData,
-    paymentProvider: "Phonepe" | "SabPaisa" | "Zwitch"
+    paymentProvider: PaymentProviderId
   ) => {
     data.amount = finalPrice;
     setPaymentStatus(null);
@@ -135,7 +131,6 @@ const MasterClass = ({ masterclass }: { masterclass: Masterclass | null }) => {
       } else if (paymentProvider === "Phonepe") {
         await phonePePaymentIntegration(data, setPaymentToken, setIsProcessingPayment);
       } else if (paymentProvider === "Zwitch") {
-        // Use the new Zwitch hook
         setIsProcessingPayment(true);
         await initiateZwitchPayment({
           ...data,
@@ -165,20 +160,33 @@ const MasterClass = ({ masterclass }: { masterclass: Masterclass | null }) => {
 
     localStorage.setItem("masterclass_registration", JSON.stringify(data));
 
-    // Check if price is higher than 1000
+    const activeProviders = getActiveProviders();
+
+    // Check if price is higher than 1000 and PhonePe is active
     if ((masterclass?.price || 0) > 1000) {
-      // Automatically use PhonePe without showing modal
-      processPayment(data, "Phonepe");
-    } else {
-      // Show payment provider modal for prices <= 1000
+      const phonePeProvider = activeProviders.find(p => p.id === "Phonepe");
+      if (phonePeProvider) {
+        // Automatically use PhonePe
+        processPayment(data, "Phonepe");
+        return;
+      }
+    }
+
+    // If only one payment provider is active, use it directly
+    if (activeProviders.length === 1) {
+      processPayment(data, activeProviders[0].id);
+    } else if (activeProviders.length > 1) {
+      // Show modal if multiple providers are active
       setPendingFormData(data);
       setIsPaymentModalOpen(true);
+    } else {
+      // No active payment providers
+      toast.error("No payment providers available. Please contact support.");
     }
   };
 
   useEffect(() => {
     if (paymentToken) {
-      // For Zwitch, open in same tab like other providers
       window.open(paymentToken, "_self", "noopener,noreferrer");
       setIsProcessingPayment(false);
     }
