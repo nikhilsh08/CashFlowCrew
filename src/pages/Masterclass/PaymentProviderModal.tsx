@@ -19,7 +19,7 @@ export const PaymentProviderModal = ({ isOpen, onClose, onSelectProvider, finalP
       id: "Phonepe",
       name: "PhonePe",
       logo: phonepe,
-      isActive: true,
+      isActive: false,
       errorMessage: "",
     },
     {
