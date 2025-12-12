@@ -3,7 +3,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import type { Masterclass } from "../../types";
 import { masterclassConfig } from "../../data";
-
 interface FormData {
   firstName: string;
   lastName: string;
@@ -266,23 +265,24 @@ export const useZwitchPayment = () => {
         `${import.meta.env.VITE_SERVER_URL}/api/v1/payments/initiate-zw-v1`,
         data
       );
-      console.log('Zwitch initiation response:', response);
+      
       if (!response.data.success) {
         throw new Error('Failed to initiate Zwitch payment');
       }
-
+      
       setZwitchData(response.data);
-
+      
       // Load Layer SDK script dynamically
       await loadLayerScript(response.data.remoteScript);
-
+      
       // Trigger payment
-      triggerZwitchCheckout(response.data);
+      await triggerZwitchCheckout(response.data);
+      return response.data;
 
     } catch (error: any) {
       setIsLoading(false);
       toast.error(error?.response?.data?.message || 'Failed to initiate Zwitch payment');
-      // console.error('Zwitch payment error:', error);
+      console.error('Zwitch payment error:', error);
     }
   };
 
@@ -310,7 +310,7 @@ export const useZwitchPayment = () => {
     });
   };
 
-  const triggerZwitchCheckout = (paymentData: ZwitchResponse) => {
+  const triggerZwitchCheckout = async (paymentData: ZwitchResponse) => {
     if (!window.Layer) {
       toast.error('Payment gateway not loaded. Please try again.');
       setIsLoading(false);
@@ -322,26 +322,32 @@ export const useZwitchPayment = () => {
         token: paymentData.paymentToken,
         accesskey: paymentData.accessKey,
       },
-      (response: any) => {
+       async (response: any) => {
         // Success callback
-        // console.log('Layer payment response:', response);
+        console.log('Layer payment response:', response);
 
         if (response && response.payment_id) {
           // Send payment details to backend for verification
-          verifyZwitchPayment(
+          await verifyZwitchPayment(
             paymentData,
             response.payment_id
           );
+          // console.log("payment success", paymentData,response.payment_id);
+          window.location.href = `/payment/status/${paymentData.orderId}`;
+          return;
         } else {
           setIsLoading(false);
           toast.error('Payment response invalid');
+          // console.log("payment_id not found",response);
+          window.location.href = `/payment/status/${paymentData.orderId}`;
+        return;
         }
       },
       (error: any) => {
         // Error callback
         setIsLoading(false);
         toast.error(error?.message || 'Payment failed');
-        // console.error('Layer payment error:', error);
+        console.error('Layer payment error:', error);
       }
     );
   };
@@ -407,6 +413,7 @@ export const useZwitchPayment = () => {
     isLoading,
     zwitchData,
     initiateZwitchPayment,
+
   };
 };
 
