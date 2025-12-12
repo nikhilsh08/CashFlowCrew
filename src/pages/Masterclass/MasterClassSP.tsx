@@ -121,7 +121,7 @@ const MasterClass = ({ masterclass }: { masterclass: Masterclass | null }) => {
     data: FormData,
     paymentProvider: PaymentProviderId
   ) => {
-    data.amount = 1;
+    data.amount = finalPrice;
     setPaymentStatus(null);
     setIsProcessingPayment(true);
 
@@ -135,7 +135,7 @@ const MasterClass = ({ masterclass }: { masterclass: Masterclass | null }) => {
         await initiateZwitchPayment({
           ...data,
           Event: masterclass?._id || '',
-          amount: 1,
+          amount: finalPrice,
         });
       }
     } catch (error) {
