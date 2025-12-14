@@ -224,6 +224,7 @@ const Status = () => {
       setPaymentStatus(transformedResponse);
 
       if (response.data.success && transformedResponse.status === "COMPLETED") {
+        console.log("✅ Zwitch payment completed, firing events", transformedResponse);
         firePurchaseEvents(transformedResponse);
       }
 
