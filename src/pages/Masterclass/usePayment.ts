@@ -324,7 +324,7 @@ export const useZwitchPayment = () => {
       },
        async (response: any) => {
         // Success callback
-        console.log('Layer payment response:', response);
+        console.log('Layer payment response:', response,paymentData);
 
         if (response && response.payment_id) {
           // Send payment details to backend for verification

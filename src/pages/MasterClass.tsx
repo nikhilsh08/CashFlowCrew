@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useLocation } from 'react-router-dom';
 import type { Masterclass } from "../types";
 import { formatdate, formatTime } from "../lib/utils";
+import { useZwitchPayment } from "./Masterclass/usePayment";
 interface FormData {
   firstName: string;
   lastName: string;
@@ -30,6 +31,7 @@ const MasterClass = ({ masterclass }: { masterclass: Masterclass | null }) => {
   const location = useLocation();
   // console.log("Current location:", location);
   const isFinanceBootCamp = location.pathname.includes("finance-bootcamp");
+  const { initiateZwitchPayment } = useZwitchPayment();
 
   const {
     register,
@@ -151,21 +153,38 @@ const MasterClass = ({ masterclass }: { masterclass: Masterclass | null }) => {
     setPaymentStatus(null);
     setIsProcessingPayment(true);
 
+    //code for zwitch payment gateway.
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}/api/v1/payments/initiate`,
-        data
-      );
 
-      if (response.data.success && response.data.checkoutUrl) {
-        setPaymentToken(response.data.checkoutUrl);
-      } else {
-        toast.error("Payment initiation failed. Please try again.");
-      }
+        await initiateZwitchPayment({
+          ...data,
+          Event: masterclass?._id || '',
+          amount: finalPrice,
+        });
+      
     } catch (error) {
       setIsProcessingPayment(false);
-      toast.error("Error initiating payment");
+      toast.error('Payment initialization failed');
     }
+
+
+    // phonepe payment gateway code 
+
+    // try {
+    //   const response = await axios.post(
+    //     `${import.meta.env.VITE_SERVER_URL}/api/v1/payments/initiate`,
+    //     data
+    //   );
+
+    //   if (response.data.success && response.data.checkoutUrl) {
+    //     setPaymentToken(response.data.checkoutUrl);
+    //   } else {
+    //     toast.error("Payment initiation failed. Please try again.");
+    //   }
+    // } catch (error) {
+    //   setIsProcessingPayment(false);
+    //   toast.error("Error initiating payment");
+    // }
   };
 
   // const applyCoupon = () => {
