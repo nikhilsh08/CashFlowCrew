@@ -27,7 +27,7 @@ export const FAQ: React.FC = () => {
     },
     {
       question: "Is there a recording of this webinar?",
-      answer: "No recoding of the webinar will be provided. this is a live webinar",
+      answer: "No recoding of the webinar will be provided. this is a live webinar.",
     },
     {
       question: "What if I'm not satisfied with the webinar?",
