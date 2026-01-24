@@ -31,6 +31,7 @@ import { ToastContainer } from "react-toastify";
 import { useMasterclass } from "./hooks/useMasterclass";
 import MovingLoader from "./components/Loader";
 import MasterClassSP from "./pages/Masterclass/MasterClassSP";
+import { Popup } from "./components/Popup";
 
 // ---------------- Context Setup ----------------
 type MasterclassContextType = ReturnType<typeof useMasterclass>;
@@ -95,6 +96,7 @@ const HomePage: React.FC = () => (
     </div>
     <Disclaimer />
     <Footer />
+    <Popup/>
   </>
 );
 

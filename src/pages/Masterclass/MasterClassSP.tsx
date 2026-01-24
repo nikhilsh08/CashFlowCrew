@@ -13,6 +13,7 @@ import { PaymentProviderModal } from "./PaymentProviderModal";
 import { useZwitchPayment } from "./usePayment";
 import { getActiveProviders, type PaymentProviderId} from "./PaymentProviderModal";
 
+
 interface FormData {
   firstName: string;
   lastName: string;
@@ -634,6 +635,8 @@ const MasterClass = ({ masterclass }: { masterclass: Masterclass | null }) => {
           </div>
         </div>
       )}
+
+
     </div>
   );
 };
