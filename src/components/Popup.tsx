@@ -36,7 +36,7 @@ export const Popup: React.FC = () => {
 
 
     } catch (error: any) {
-      toast.error(error?.response?.data?.message || "email not found");
+      toast.error(error?.response?.data?.message || "internal server error");
       // console.error("Error applying coupon", error);
 
     }
